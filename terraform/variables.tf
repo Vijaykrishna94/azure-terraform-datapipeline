@@ -22,3 +22,16 @@ variable "env_prefix" {
   default     = "dev"
   description = "Prefix of the env name in your Azure subscription."
 }
+
+variable "admin_username" {
+  type        = string
+  description = "The administrator username of the SQL logical server."
+  default     = "azuresqladmin"
+}
+
+variable "admin_password" {
+  type        = string
+  description = "The administrator password of the SQL logical server."
+  sensitive   = true
+  default     = null
+}
