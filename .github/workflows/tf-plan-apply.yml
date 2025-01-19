@@ -41,7 +41,6 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: | 
-        cd terraform
         terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -55,8 +54,6 @@ jobs:
     - name: Terraform Plan
       id: tf-plan
       run: |
-        az login
-        cd terraform 
         export exitcode=0
         terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
@@ -80,7 +77,6 @@ jobs:
     - name: Create String Output
       id: tf-plan-string
       run: |
-        cd terraform
         TERRAFORM_PLAN=$(terraform show -no-color tfplan)
         
         delimiter="$(openssl rand -hex 8)"
