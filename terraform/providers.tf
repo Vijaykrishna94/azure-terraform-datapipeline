@@ -15,11 +15,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    subscription_id = "71458d97-9dd7-48da-8513-2222c61f78bf"
     resource_group_name  = "vj-rcm-dev-rg"
     storage_account_name = "vjrcmdevstorage"
     container_name       = "tfstate"
-    key                  = "root.terraform.tfstate"
+    key                  = "terraform.tfstate"
     use_oidc             = true
   }
 }

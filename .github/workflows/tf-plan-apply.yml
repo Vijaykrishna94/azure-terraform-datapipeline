@@ -42,8 +42,6 @@ jobs:
     - name: Terraform Init
       run: | 
         cd terraform
-        az login
-        az account set -s "Azure subscription 1"
         terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
