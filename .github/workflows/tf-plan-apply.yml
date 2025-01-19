@@ -42,6 +42,7 @@ jobs:
     - name: Terraform Init
       run: | 
         cd terraform
+        ls 
         terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
