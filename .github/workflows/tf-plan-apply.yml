@@ -47,7 +47,9 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not
     - name: Terraform Format
-      run: terraform fmt -check
+      run: |
+        cd terraform
+        terraform fmt -check
 
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
@@ -55,6 +57,7 @@ jobs:
       id: tf-plan
       run: |
         cd terraform
+        echo "$secrets.AZURE_SUBSCRIPTION_ID" >>  $GITHUB_OUTPUT 
         export exitcode=0
         terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
