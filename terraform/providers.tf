@@ -18,7 +18,7 @@ terraform {
     resource_group_name  = "vj-rcm-dev-rg"
     storage_account_name = "vjrcmdevstorage"
     container_name       = "tfstate"
-    key                  = "terraform.tfstate"
+    key                  = "root.terraform.tfstate"
     use_oidc             = true
   }
 }
