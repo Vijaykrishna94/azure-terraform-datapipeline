@@ -48,7 +48,6 @@ jobs:
     # Will fail the build if not
     - name: Terraform Format
       run: |
-        cd terraform
         terraform fmt -check
 
     # Generates an execution plan for Terraform
