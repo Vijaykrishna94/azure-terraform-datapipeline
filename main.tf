@@ -1,7 +1,7 @@
 # Setting up resource group
 resource "azurerm_resource_group" "rcm_rg" {
   name     = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-rg"
-  location = "${var.resource_group_location}"
+  location = var.resource_group_location
 }
 
 # Setting up  Storage account
@@ -17,10 +17,10 @@ resource "azurerm_storage_account" "rcm_adls" {
 
 # Setting up containers
 resource "azurerm_storage_container" "rcm_container" {
-    for_each = toset(["configs","landing","bronze","silver","gold","tfstate"])
-    name = each.key
-    storage_account_name = azurerm_storage_account.rcm_adls.name
-    container_access_type = "private"
+  for_each              = toset(["configs", "landing", "bronze", "silver", "gold", "tfstate", "dummy"])
+  name                  = each.key
+  storage_account_name  = azurerm_storage_account.rcm_adls.name
+  container_access_type = "private"
 }
 
 
@@ -30,7 +30,7 @@ resource "azurerm_data_factory" "rcm_adf" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adf"
   location            = azurerm_resource_group.rcm_rg.location
   resource_group_name = azurerm_resource_group.rcm_rg.name
-} 
+}
 
 # setting up databricks account
 resource "azurerm_databricks_workspace" "rcm_adb" {

@@ -26,7 +26,7 @@ resource "azurerm_mssql_server" "rcm_server" {
 }
 
 resource "azurerm_mssql_database" "rcm_db" {
-  for_each = toset(["${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-a","${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-b"])
+  for_each  = toset(["${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-a", "${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-b"])
   name      = each.key
   server_id = azurerm_mssql_server.rcm_server.id
 }
