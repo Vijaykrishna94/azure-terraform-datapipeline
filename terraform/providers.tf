@@ -14,6 +14,13 @@ terraform {
       version = "~>3.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "vj-rcm-dev-rg"
+    storage_account_name = "vjrcmdevstorage"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+    use_oidc             = true
+  }
 }
 
 # Configure the Microsoft Azure Provider

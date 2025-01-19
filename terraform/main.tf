@@ -17,11 +17,13 @@ resource "azurerm_storage_account" "rcm_adls" {
 
 # Setting up containers
 resource "azurerm_storage_container" "rcm_container" {
-    for_each = toset(["configs","landing","bronze","silver","gold"])
+    for_each = toset(["configs","landing","bronze","silver","gold","tfstate"])
     name = each.key
     storage_account_name = azurerm_storage_account.rcm_adls.name
     container_access_type = "private"
 }
+
+
 
 # Setting up adf account
 resource "azurerm_data_factory" "rcm_adf" {
