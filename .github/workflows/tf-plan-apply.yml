@@ -80,6 +80,7 @@ jobs:
     - name: Create String Output
       id: tf-plan-string
       run: |
+        cd terraform
         TERRAFORM_PLAN=$(terraform show -no-color tfplan)
         
         delimiter="$(openssl rand -hex 8)"
