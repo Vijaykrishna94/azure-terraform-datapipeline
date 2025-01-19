@@ -42,7 +42,6 @@ jobs:
     - name: Terraform Init
       run: | 
         cd terraform
-        ls 
         terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -55,6 +54,7 @@ jobs:
     - name: Terraform Plan
       id: tf-plan
       run: |
+        cd terraform
         export exitcode=0
         terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
 
