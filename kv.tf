@@ -43,5 +43,22 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
   secret_permissions = [
     "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
   ]
-  depends_on = [ azuread_service_principal.azure_adf_sp ]
+  depends_on = [azuread_service_principal.azure_adf_sp]
+}
+
+
+
+
+resource "azurerm_key_vault_access_policy" "rcm-adls-principal" {
+  key_vault_id = azurerm_key_vault.rcm_kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azuread_service_principal.azure_adls_sp.object_id
+
+  key_permissions = [
+    "Get", "List", "UnwrapKey", "WrapKey"
+  ]
+  secret_permissions = [
+    "Get", "List"
+  ]
+  depends_on = [azuread_service_principal.azure_adls_sp]
 }
