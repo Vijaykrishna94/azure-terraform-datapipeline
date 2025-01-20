@@ -11,9 +11,4 @@ resource "azuread_service_principal" "rcm_adf_sp" {
   client_id                    = azuread_application.rcm_adf_app.client_id
   app_role_assignment_required = false
   owners                       = [data.azuread_client_config.ad_current.object_id]
-
-  feature_tags {
-    enterprise = true
-    gallery    = true
-  }
 }
