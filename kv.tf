@@ -65,24 +65,24 @@ resource "azurerm_key_vault_access_policy" "rcm-adls-principal" {
 
 
 
-resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
-  name         = "vj-sqldb-access-key-dev"
-  value        =  local.admin_password
-  key_vault_id = azurerm_key_vault.rcm_kv.id
-}
+# resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
+#   name         = "vj-sqldb-access-key-dev"
+#   value        =  local.admin_password
+#   key_vault_id = azurerm_key_vault.rcm_kv.id
+# }
 
 
-data "azurerm_storage_account" "rcm_adls_key" {
-  name                     = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}storage"
-  resource_group_name      = azurerm_resource_group.rcm_rg.name
-}
+# data "azurerm_storage_account" "rcm_adls_key" {
+#   name                     = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}storage"
+#   resource_group_name      = azurerm_resource_group.rcm_rg.name
+# }
 
 
-resource "azurerm_key_vault_secret" "rcm_adls_kv" {
-  name         = "vj-adls-access-key-dev"
-  value        =  data.azurerm_storage_account.rcm_adls_key.primary_access_key
-  key_vault_id = azurerm_key_vault.rcm_kv.id
-}
+# resource "azurerm_key_vault_secret" "rcm_adls_kv" {
+#   name         = "vj-adls-access-key-dev"
+#   value        =  data.azurerm_storage_account.rcm_adls_key.primary_access_key
+#   key_vault_id = azurerm_key_vault.rcm_kv.id
+# }
 
 
 
