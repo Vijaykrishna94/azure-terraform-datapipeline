@@ -9,6 +9,7 @@ resource "azuread_application_registration" "rcm_adf_app" {
 resource "azuread_service_principal" "azure_adf_sp" {
   client_id    = azuread_application_registration.rcm_adf_app.client_id
   use_existing = true
+  
 }
 
 
