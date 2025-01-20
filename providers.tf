@@ -15,7 +15,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.15.0"
+      version = ">= 2.23.0"
     }
   }
   backend "azurerm" {
@@ -35,6 +35,5 @@ provider "azurerm" {
 
 # Configure the Azure Active Directory Provider
 provider "azuread" {
-  use_cli = false
-  tenant_id = data.azurerm_client_config.current.tenant_id
+  use_oidc = true
 }
