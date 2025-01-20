@@ -75,7 +75,6 @@ resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
 data "azurerm_storage_account" "rcm_adls_key" {
   name                     = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}storage"
   resource_group_name      = azurerm_resource_group.rcm_rg.name
-  location                 = azurerm_resource_group.rcm_rg.location
 }
 
 
