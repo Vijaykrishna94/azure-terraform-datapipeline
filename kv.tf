@@ -35,7 +35,7 @@ resource "azurerm_key_vault" "rcm_kv" {
 resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
   key_vault_id = azurerm_key_vault.rcm_kv.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azuread_service_principal.azure_adf_sp.object_id
+  object_id    = azuread_service_principal.azuread_sp.object_id
 
   key_permissions = [
     "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"
