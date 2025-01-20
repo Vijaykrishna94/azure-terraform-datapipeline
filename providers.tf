@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/random"
       version = "~>3.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.15.0"
+    }
   }
   backend "azurerm" {
     resource_group_name  = "vj-rcm-dev-rg"
@@ -27,4 +31,9 @@ terraform {
 provider "azurerm" {
   use_oidc = true
   features {}
+}
+
+# Configure the Azure Active Directory Provider
+provider "azuread" {
+  tenant_id = data.azurerm_client_config.current.tenant_id
 }
