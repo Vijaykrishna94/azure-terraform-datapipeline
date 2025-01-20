@@ -35,5 +35,6 @@ provider "azurerm" {
 
 # Configure the Azure Active Directory Provider
 provider "azuread" {
+  use_cli = false
   tenant_id = data.azurerm_client_config.current.tenant_id
 }
