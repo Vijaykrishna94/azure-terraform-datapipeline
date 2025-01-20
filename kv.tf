@@ -66,11 +66,11 @@ resource "azurerm_key_vault_access_policy" "rcm-adls-principal" {
 
 
 
-# resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
-#   name         = "vj-sqldb-access-key-dev"
-#   value        =  local.admin_password
-#   key_vault_id = azurerm_key_vault.rcm_kv.id
-# }
+resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
+  name         = "vj-sqldb-access-key-dev"
+  value        =  local.admin_password
+  key_vault_id = azurerm_key_vault.rcm_kv.id
+}
 
 
 data "azurerm_storage_account" "rcm_adls_key" {
