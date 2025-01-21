@@ -15,6 +15,8 @@ resource "azurerm_storage_account" "rcm_adls" {
   is_hns_enabled           = "true"
 }
 
+
+
 # Setting up containers
 resource "azurerm_storage_container" "rcm_container" {
   for_each              = toset(["configs", "landing", "bronze", "silver", "gold", "tfstate"])
