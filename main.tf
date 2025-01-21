@@ -15,6 +15,19 @@ resource "azurerm_storage_account" "rcm_adls" {
   is_hns_enabled           = "true"
 }
 
+
+
+# Setting up  Storage account
+resource "azurerm_storage_account" "rcm_adls_2" {
+  name                     = data.azurerm_key_vault_secret.current_adls_secret.value
+  resource_group_name      = azurerm_resource_group.rcm_rg.name
+  location                 = azurerm_resource_group.rcm_rg.location
+  account_tier             = "Standard"
+  account_replication_type = "RAGRS"
+  account_kind             = "StorageV2"
+  is_hns_enabled           = "true"
+}
+
 # Setting up containers
 resource "azurerm_storage_container" "rcm_container" {
   for_each              = toset(["configs", "landing", "bronze", "silver", "gold", "tfstate"])
