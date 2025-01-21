@@ -13,7 +13,7 @@ data "azurerm_key_vault" "current_adls_key" {
 
 #Get the secret of id
 data "azurerm_key_vault_secret" "current_adls_secret" {
-  name         = "vj-sqldb-access-key-dev"
+  name         = "vj-adls-access-key-dev"
   key_vault_id = data.azurerm_key_vault.current_adls_key.id
 }
 
