@@ -63,7 +63,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
 
   template_content = <<TEMPLATE
  {
-    "name": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls",
+    "name": "vj-rcm-dev-sql-ls",
     "type": "Microsoft.DataFactory/factories/linkedservices",
     "properties": {
         "parameters": {
@@ -74,7 +74,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
         "annotations": [],
         "type": "AzureSqlDatabase",
         "typeProperties": {
-            "server": "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net",
+            "server": "vjrcmdevsql.database.windows.net",
             "database": "@{linkedService().db_name}",
             "encrypt": "mandatory",
             "trustServerCertificate": false,
@@ -83,7 +83,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
             "password": {
                 "type": "AzureKeyVaultSecret",
                 "store": {
-                    "referenceName": azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name,
+                    "referenceName": "vj-rcm-dev-kv",
                     "type": "LinkedServiceReference"
                 },
                 "secretName": "vj-sqldb-access-key-dev"
