@@ -27,6 +27,9 @@ resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
 }
 
 
+
+
+
 # Get the kv id  
 data "azurerm_key_vault" "current_key" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv"
@@ -48,3 +51,44 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "rcm_adls_
 }
 
 
+
+
+
+
+
+resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
+  name                = "terraform-arm-sql-ls"
+  resource_group_name = azurerm_resource_group.rcm_rg.name
+  deployment_mode     = "Incremental"
+
+  template_content = <<TEMPLATE
+ {
+    "name": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "parameters": {
+            "db_name": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "AzureSqlDatabase",
+        "typeProperties": {
+            "server": "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net",
+            "database": "@{linkedService().db_name}",
+            "encrypt": "mandatory",
+            "trustServerCertificate": false,
+            "authenticationType": "SQL",
+            "userName": var.admin_username,
+            "password": {
+                "type": "AzureKeyVaultSecret",
+                "store": {
+                    "referenceName": azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name,
+                    "type": "LinkedServiceReference"
+                },
+                "secretName": "vj-sqldb-access-key-dev"
+            }
+        }
+    }
+    TEMPLATE
+  }
