@@ -79,7 +79,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
             "encrypt": "mandatory",
             "trustServerCertificate": false,
             "authenticationType": "SQL",
-            "userName": var.admin_username,
+            "userName": "azuresqladmin",
             "password": {
                 "type": "AzureKeyVaultSecret",
                 "store": {
