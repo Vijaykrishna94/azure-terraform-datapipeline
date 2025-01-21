@@ -62,6 +62,12 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
   deployment_mode     = "Incremental"
 
   template_content = <<TEMPLATE
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+	"variables": {},
+	"resources": [
+ 
  {
     "name": "vj-rcm-dev-sql-ls",
     "type": "Microsoft.DataFactory/factories/linkedservices",
@@ -87,9 +93,11 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
                     "type": "LinkedServiceReference"
                 },
                 "secretName": "vj-sqldb-access-key-dev"
-            }
-        }
-    }
- }
+             }
+           }
+         }
+       }
+     ]
+  }
     TEMPLATE
 }
