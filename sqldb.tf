@@ -25,6 +25,13 @@ resource "azurerm_mssql_server" "rcm_server" {
   version                      = "12.0"
 }
 
+resource "azurerm_mssql_firewall_rule" "rcm_fw" {
+  name             = "FirewallRule1"
+  server_id        = azurerm_mssql_server.rcm_server.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "0.0.0.0"
+}
+
 resource "azurerm_mssql_database" "rcm_db" {
   for_each  = toset(["${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-a", "${var.resource_group_name_prefix}-${var.proj_name_prefix}-hos-b"])
   name      = each.key
