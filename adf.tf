@@ -81,7 +81,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
             }
         },
         "annotations": [],
-        "type": "AzureSqlDatabase",
+        "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01/AzureSqlDatabase",
         "typeProperties": {
             "server": "vjrcmdevsql.database.windows.net",
             "database": "@{linkedService().db_name}",
