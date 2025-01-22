@@ -15,16 +15,16 @@ resource "azurerm_data_factory_linked_service_key_vault" "rcm_kv_ls" {
 }
 
 
-resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
-  name            = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sqldb-ls"
-  data_factory_id = azurerm_data_factory.rcm_adf.id
-  user_name = var.admin_username
-  connection_string = "Integrated Security=False;Data Source=test;Initial Catalog=test;User ID=test;"
-  key_vault_password {
-    linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
-    secret_name         = "vj-sqldb-access-key-dev"
-  }
-}
+# resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
+#   name            = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sqldb-ls"
+#   data_factory_id = azurerm_data_factory.rcm_adf.id
+#   user_name = var.admin_username
+#   connection_string = "Integrated Security=False;Data Source=test;Initial Catalog=test;User ID=test;"
+#   key_vault_password {
+#     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
+#     secret_name         = "vj-sqldb-access-key-dev"
+#   }
+# }
 
 
 
@@ -56,57 +56,3 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "rcm_adls_
 
 
 
-resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
-  name                = "terraform-arm-sql-ls"
-  resource_group_name = azurerm_resource_group.rcm_rg.name
-  
-  deployment_mode     = "Incremental"
-
-  template_content = <<TEMPLATE
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "apiProfile": "2024-05-01-preview",
-	"variables": {},
-	"resources": [
-   {
-    "type": "Microsoft.DataFactory/factories",
-    "name": "vj-rcm-dev-adf",
-    "location": "Sweden Central",
-	"resources": [
-    {
-    "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
-    "name": "vj-rcm-dev-sql-ls",
-    "parent": "vj-rcm-dev-adf",
-    "properties": {
-        "parameters": {
-            "db_name": {
-                "type": "string"
-            }
-        },
-        "annotations": [],
-        "type": "AzureSqlDatabase",
-        "typeProperties": {
-            "server": "vjrcmdevsql.database.windows.net",
-            "database": "@{linkedService().db_name}",
-            "encrypt": "mandatory",
-            "trustServerCertificate": false,
-            "authenticationType": "SQL",
-            "userName": "azuresqladmin",
-            "password": {
-                "type": "AzureKeyVaultSecret",
-                "store": {
-                    "referenceName": "vj-rcm-dev-kv-ls",
-                    "type": "LinkedServiceReference"
-                },
-                "secretName": "vj-sqldb-access-key-dev"
-             }
-           }
-         }
-       }
-	  ]
-	 }
-    ]
-  }
-    TEMPLATE
-}
