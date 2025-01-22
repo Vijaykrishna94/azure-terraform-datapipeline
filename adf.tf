@@ -79,7 +79,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
         },
         "annotations": [],
         "type": "AzureSqlDatabase",
-        "apiVersion": "2024-05-01-preview"
+        "apiVersion": "2024-05-01-preview",
         "typeProperties": {
             "server": "vjrcmdevsql.database.windows.net",
             "database": "@{linkedService().db_name}",
