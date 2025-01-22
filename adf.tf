@@ -72,7 +72,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
  
  {
 
-    "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
+    "type": "/subscriptions/71458d97-9dd7-48da-8513-2222c61f78bf/resourceGroups/vj-rcm-dev-rg/providers/Microsoft.DataFactory/factories/vj-rcm-dev-adf",
     "name": "vj-rcm-dev-sql-ls",
     "properties": {
         "parameters": {
@@ -81,7 +81,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
             }
         },
         "annotations": [],
-        "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01/AzureSqlDatabase",
+        "type": "AzureSqlDatabase",
         "typeProperties": {
             "server": "vjrcmdevsql.database.windows.net",
             "database": "@{linkedService().db_name}",
