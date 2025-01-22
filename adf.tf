@@ -78,6 +78,9 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
  {
     "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
     "name": "vj-rcm-dev-sql-ls",
+     "dependsOn": [
+      "vj-rcm-dev-adf"
+    ],
     "properties": {
         "parameters": {
             "db_name": {
