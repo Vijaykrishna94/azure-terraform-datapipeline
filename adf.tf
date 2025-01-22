@@ -59,6 +59,7 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "rcm_adls_
 resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
   name                = "terraform-arm-sql-ls"
   resource_group_name = azurerm_resource_group.rcm_rg.name
+  
   deployment_mode     = "Incremental"
 
   template_content = <<TEMPLATE
@@ -70,8 +71,9 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
 	"resources": [
  
  {
-    "name": "vj-rcm-dev-rg/vj-rcm-dev-adf/vj-rcm-dev-sql-ls",
+
     "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
+    "name": "vj-rcm-dev-sql-ls",
     "properties": {
         "parameters": {
             "db_name": {
