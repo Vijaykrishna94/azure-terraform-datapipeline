@@ -63,8 +63,8 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
 
   template_content = <<TEMPLATE
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
 	"variables": {},
 	"resources": [
  
@@ -72,16 +72,11 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
     "name": "vj-rcm-dev-sql-ls",
     "type": "Microsoft.DataFactory/factories/linkedservices",
     "properties": {
-        "parameters": {
-            "db_name": {
-                "type": "string"
-            }
-        },
         "annotations": [],
         "type": "AzureSqlDatabase",
         "typeProperties": {
             "server": "vjrcmdevsql.database.windows.net",
-            "database": "@{linkedService().db_name}",
+            "database": " ",
             "encrypt": "mandatory",
             "trustServerCertificate": false,
             "authenticationType": "SQL",
