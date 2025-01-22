@@ -72,11 +72,17 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
     "name": "vj-rcm-dev-sql-ls",
     "type": "Microsoft.DataFactory/factories/linkedservices",
     "properties": {
+        "parameters": {
+            "db_name": {
+                "type": "string"
+            }
+        },
         "annotations": [],
         "type": "AzureSqlDatabase",
+        "apiVersion": "2024-05-01-preview"
         "typeProperties": {
             "server": "vjrcmdevsql.database.windows.net",
-            "database": " ",
+            "database": "@{linkedService().db_name}",
             "encrypt": "mandatory",
             "trustServerCertificate": false,
             "authenticationType": "SQL",
