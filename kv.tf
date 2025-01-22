@@ -51,7 +51,7 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
 # resource "azurerm_key_vault_access_policy" "rcm-adf-mi" {
 #   key_vault_id = azurerm_key_vault.rcm_kv.id
 #   tenant_id    = data.azurerm_client_config.current.tenant_id
-#   object_id    = azurerm_data_factory.rcm_adf.
+#   object_id    = azurerm_data_factory.rcm_adf.identity[0]
 
 #   key_permissions = [
 #     "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"
@@ -103,5 +103,5 @@ resource "azurerm_key_vault_secret" "rcm_adls_kv" {
 
 
 output "identity" {
-  value = azurerm_data_factory.rcm_adf.identity
+  value = azurerm_data_factory.rcm_adf.identity[0]
 }
