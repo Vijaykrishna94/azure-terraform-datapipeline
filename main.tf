@@ -30,6 +30,9 @@ resource "azurerm_storage_container" "rcm_container" {
 # Setting up adf account
 resource "azurerm_data_factory" "rcm_adf" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adf"
+  identity {
+    type = "SystemAssigned"
+  }
   location            = azurerm_resource_group.rcm_rg.location
   resource_group_name = azurerm_resource_group.rcm_rg.name
 }
