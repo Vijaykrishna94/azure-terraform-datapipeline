@@ -69,10 +69,14 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
   "apiProfile": "2024-05-01-preview",
 	"variables": {},
 	"resources": [
- 
- {
+   {
+    "type": "Microsoft.DataFactory/factories@2018-06-01",
+    "name": "vj-rcm-dev-adf",
+    "location": "Sweden Central"
+  },
 
-    "type": "/subscriptions/71458d97-9dd7-48da-8513-2222c61f78bf/resourceGroups/vj-rcm-dev-rg/providers/Microsoft.DataFactory/factories/vj-rcm-dev-adf/Microsoft.DataFactory/factories/linkedservices@2018-06-01",
+ {
+    "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
     "name": "vj-rcm-dev-sql-ls",
     "properties": {
         "parameters": {
