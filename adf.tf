@@ -19,7 +19,9 @@ resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
   name            = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sqldb-ls"
   data_factory_id = azurerm_data_factory.rcm_adf.id
   user_name = var.admin_username
-  connection_string = "Integrated Security=False;Data Source=test;Initial Catalog=vijay;User ID=test;"
+  parameters = {"db_name":"string"}
+  connection_string = "Integrated Security=False;Data Source = ${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql ;Initial Catalog=@{linkedService().db_name};User ID=azuresqladmin; Authentication = SqlAuthenticationMethod ;"
+
   key_vault_password {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
     secret_name         = "vj-sqldb-access-key-dev"
