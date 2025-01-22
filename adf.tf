@@ -90,7 +90,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
             "password": {
                 "type": "AzureKeyVaultSecret",
                 "store": {
-                    "referenceName": "vj-rcm-dev-kv",
+                    "referenceName": "vj-rcm-dev-kv-ls,
                     "type": "LinkedServiceReference"
                 },
                 "secretName": "vj-sqldb-access-key-dev"
