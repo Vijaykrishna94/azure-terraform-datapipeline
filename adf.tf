@@ -70,7 +70,7 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
 	"variables": {},
 	"resources": [
    {
-    "type": "Microsoft.DataFactory/factories@2018-06-01",
+    "type": "Microsoft.DataFactory/factories",
     "name": "vj-rcm-dev-adf",
     "location": "Sweden Central"
   },
@@ -78,6 +78,9 @@ resource "azurerm_resource_group_template_deployment" "terraform-arm-sql-ls" {
  {
     "type": "Microsoft.DataFactory/factories/linkedservices@2018-06-01",
     "name": "vj-rcm-dev-sql-ls",
+     "dependsOn": [
+      "vj-rcm-dev-adf"
+    ],
     "properties": {
         "parameters": {
             "db_name": {
