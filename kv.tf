@@ -48,19 +48,19 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
 }
 
 
-# resource "azurerm_key_vault_access_policy" "rcm-adf-mi" {
-#   key_vault_id = azurerm_key_vault.rcm_kv.id
-#   tenant_id    = data.azurerm_client_config.current.tenant_id
-#   object_id    = azurerm_data_factory.rcm_adf.identity[0].principal_id
+resource "azurerm_key_vault_access_policy" "rcm-adf-mi" {
+  key_vault_id = azurerm_key_vault.rcm_kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_data_factory.rcm_adf.identity[0].principal_id
 
-#   key_permissions = [
-#     "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"
-#   ]
-#   secret_permissions = [
-#     "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
-#   ]
+  key_permissions = [
+    "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"
+  ]
+  secret_permissions = [
+    "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
+  ]
 
-# }
+}
 
 
 
