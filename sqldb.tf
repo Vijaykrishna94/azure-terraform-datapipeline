@@ -27,7 +27,7 @@ resource "azurerm_mssql_server" "rcm_server" {
 
 resource "azurerm_mssql_firewall_rule" "rcm_fw" {
   name             = "FirewallRule1"
-  server_id        = azurerm_mssql_server.example.id
+  server_id        = azurerm_mssql_server.rcm_server.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }
