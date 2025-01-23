@@ -19,8 +19,8 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "vj-rcm-dev-rg"
-    storage_account_name = "vjrcmdevstorage"
+    resource_group_name  = "vj-terraform-rg"
+    storage_account_name = "vjterraformstorage"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
     use_oidc             = true
