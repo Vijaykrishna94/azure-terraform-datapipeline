@@ -40,15 +40,15 @@ resource "azurerm_data_factory" "rcm_adf" {
 }
 
 # setting up databricks account
-# resource "azurerm_databricks_workspace" "rcm_adb" {
-#   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb"
-#   resource_group_name = azurerm_resource_group.rcm_rg.name
-#   location            = azurerm_resource_group.rcm_rg.location
-#   sku                 = "standard"
-#   tags = {
-#     Environment = "Staging"
-#   }
-# }
+resource "azurerm_databricks_workspace" "rcm_adb" {
+  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb"
+  resource_group_name = azurerm_resource_group.rcm_rg.name
+  location            = azurerm_resource_group.rcm_rg.location
+  sku                 = "standard"
+  tags = {
+    Environment = "Staging"
+  }
+}
 
 
 
