@@ -24,3 +24,42 @@ resource "azuread_service_principal" "azure_adls_sp" {
   use_existing = true
 }
 
+
+
+
+#Creating  adb app
+
+resource "azuread_application" "rcm_adb_app" {
+  display_name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-app"
+}
+
+
+# creating adb  azure ad sp
+resource "azuread_service_principal" "rcm_adb_sp" {
+  client_id = azuread_application.rcm_adb_app.client_id
+}
+
+
+#creating adb rotation policy for key
+resource "time_rotating" "month" {
+  rotation_days = 45
+}
+
+
+resource "azuread_service_principal_password" "rcm_adb_pass" {
+  service_principal_id = azuread_service_principal.rcm_adb_sp.object_id
+  rotate_when_changed  = { rotation = time_rotating.month.id }
+}
+
+# Mapping azuread-adb sp
+
+resource "databricks_service_principal" "rcm_db_sp" {
+  application_id = azuread_application.rcm_adb_app.client_id
+  display_name   = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-app"
+}
+
+
+data "azurerm_databricks_workspace" "current_adb" {
+  name  = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb"
+  resource_group_name = azurerm_resource_group.rcm_rg.name
+}
