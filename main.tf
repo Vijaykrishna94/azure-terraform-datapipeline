@@ -26,12 +26,7 @@ resource "azurerm_storage_account" "rcm_adls" {
 # }
 
 
-resource "azurerm_storage_container" "rcm_container" {
-  for_each              = toset(["tfstate"])
-  name                  = each.key
-  storage_account_name  = azurerm_storage_account.rcm_adls.name
-  container_access_type = "private"
-}
+
 
 
 # # Setting up adf account
