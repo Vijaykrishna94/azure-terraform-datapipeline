@@ -84,6 +84,7 @@ resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
   name         = "vj-sqldb-access-key-dev"
   value        =  local.admin_password
   key_vault_id = azurerm_key_vault.rcm_kv.id
+  depends_on = [azurerm_mssql_database.rcm_db]
 }
 
 
