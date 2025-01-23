@@ -36,6 +36,7 @@ resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
 data "azurerm_key_vault" "current_key" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv"
   resource_group_name = azurerm_resource_group.rcm_rg.name
+  depends_on = [ azurerm_key_vault.rcm_kv ]
 }
 
 #Get the secret of adls
