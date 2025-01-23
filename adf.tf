@@ -21,7 +21,7 @@ resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
   user_name = var.admin_username
   parameters = {"db_name":"string"}
   connection_string = "Integrated Security=False;Data Source = ${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net ;Initial Catalog=@{linkedService().db_name};User ID=${var.admin_username}"
-
+  depends_on = [ azurerm_key_vault_secret.rcm_sqldb_kv ]
   key_vault_password {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
     secret_name         = "vj-sqldb-access-key-dev"
@@ -43,6 +43,7 @@ data "azurerm_key_vault" "current_key" {
 data "azurerm_key_vault_secret" "current_adls_secret" {
   name         = "vj-adls-access-key-dev"
   key_vault_id = data.azurerm_key_vault.current_key.id
+  depends_on = [ azurerm_key_vault_secret.rcm_adls_kv ]
 }
 
 
