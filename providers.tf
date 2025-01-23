@@ -37,3 +37,9 @@ provider "azurerm" {
 provider "azuread" {
   use_oidc = true
 }
+
+
+# Configure the Azure Active Directory Provider
+provider "databricks" {
+}
+
