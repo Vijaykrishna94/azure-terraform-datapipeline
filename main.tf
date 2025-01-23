@@ -21,9 +21,11 @@ resource "azurerm_storage_account" "rcm_adls" {
 resource "azurerm_storage_container" "rcm_container" {
   for_each              = toset(["configs", "landing", "bronze", "silver", "gold", "tfstate"])
   name                  = each.key
-  storage_account_id  = azurerm_storage_account.rcm_adls.id
+  storage_account_id = azurerm_storage_account.rcm_adls.id
   container_access_type = "private"
 }
+
+
 
 
 
