@@ -41,5 +41,6 @@ provider "azuread" {
 
 # Configure the Azure Active Directory Provider
 provider "databricks" {
+  alias = "rcm-adb-ws"
   host = azurerm_databricks_workspace.rcm_adb.workspace_url
 }
