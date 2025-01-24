@@ -49,7 +49,7 @@ resource "time_rotating" "month" {
 
 
 resource "azuread_service_principal_password" "rcm_adb_pass" {
-  service_principal_id = azuread_service_principal.rcm_adb_sp.object_id
+  service_principal_id = azuread_service_principal.rcm_adb_sp.client_id
   rotate_when_changed  = { rotation = time_rotating.month.id }
 }
 
