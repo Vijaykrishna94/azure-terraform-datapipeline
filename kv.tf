@@ -44,6 +44,7 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
   secret_permissions = [
     "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
   ]
+  depends_on = [ azuread_service_principal.azure_adf_sp ]
 }
 
 
@@ -74,7 +75,7 @@ resource "azurerm_key_vault_access_policy" "rcm-adls-principal" {
   secret_permissions = [
     "Get", "List"
   ]
-
+  depends_on = [ azuread_service_principal.azure_adls_sp ]
 }
 
 
