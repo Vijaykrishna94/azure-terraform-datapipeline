@@ -53,8 +53,16 @@ resource "azuread_service_principal_password" "rcm_adb_pass" {
 
 # Mapping (Registering) azuread-db sp
 
-resource "databricks_service_principal" "rcm_db_sp" {
-  application_id = azuread_application.rcm_adb_app.client_id
-  display_name   = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-azureadb-app"
-  depends_on = [ azuread_application.rcm_adb_app ]
-}
+# resource "databricks_service_principal" "rcm_db_sp" {
+#   application_id = azuread_application.rcm_adb_app.client_id
+#   display_name   = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-azureadb-app"
+#   depends_on = [ azuread_application.rcm_adb_app ]
+# }
+
+
+
+
+# resource "databricks_service_principal_role" "account_admin" {
+#   service_principal_id = databricks_service_principal.rcm_db_sp.id
+#   role                 = "account_admin"
+# }
