@@ -103,3 +103,10 @@ resource "azurerm_key_vault_secret" "rcm_adls_kv" {
 }
 
 
+
+resource "azurerm_key_vault_secret" "rcm_adb_kv" {
+  name         = "vj-adb-access-key-dev"
+  value        = databricks_token.pat.token_value
+  key_vault_id = azurerm_key_vault.rcm_kv.id
+  depends_on = [ databricks_token.pat ]
+}
