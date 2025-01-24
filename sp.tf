@@ -27,11 +27,11 @@ resource "azuread_service_principal" "azure_adls_sp" {
 
 
 
-# # #Creating  adb app
+# #Creating  adb app
 
-# resource "azuread_application_registration" "rcm_adb_app" {
-#   display_name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-app"
-# }
+resource "azuread_application_registration" "rcm_adb_app" {
+  display_name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-app"
+}
 
 
 # # creating adb  azure ad sp
