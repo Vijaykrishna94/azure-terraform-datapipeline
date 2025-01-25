@@ -62,18 +62,21 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "rcm_adls_
 
 # databricks ls
 
-data "databricks_cluster" "rcm_adb_cluster" { 
+data "databricks_cluster" "current_rcm_adb_cluster" { 
+  cluster_name = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
+
 }
 
 resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
   name                = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
   data_factory_id     = azurerm_data_factory.rcm_adf.id
   description         = "ADB Linked Service via Access Token"
-  existing_cluster_id = data.databricks_cluster.rcm_adb_cluster.cluster_id
+  existing_cluster_id = data.databricks_cluster.current_rcm_adb_cluster.cluster_id
   key_vault_password {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
     secret_name         = "vj-adb-access-key-dev"
   }
   adb_domain   = databricks_cluster.rcm_adb_cluster.url
+  depends_on = [ databricks_cluster.rcm_adb_cluster ]
 }
 
