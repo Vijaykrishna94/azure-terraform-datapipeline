@@ -43,7 +43,7 @@ variable "admin_password" {
 variable "cluster_autotermination_minutes" {
   description = "How many minutes before automatically terminating due to inactivity."
   type        = number
-  default     = 60
+  default     = 15
 }
 
 variable "cluster_num_workers" {
