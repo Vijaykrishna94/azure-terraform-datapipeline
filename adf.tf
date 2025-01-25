@@ -31,6 +31,18 @@ resource "azurerm_data_factory_linked_service_sql_server" "rcm_sqldb_ls" {
 }
 
 
+resource "azurerm_data_factory_linked_service_azure_sql_database" "rcm_sql_ls" {
+  name              = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
+  data_factory_id   = azurerm_data_factory.rcm_adf.id
+  connection_string = "Integrated Security=False;Data Source = ${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net ;Initial Catalog=@{linkedService().db_name};User ID=${var.admin_username};connection timeout=30"
+  parameters = { "db_name" : "string" }
+  depends_on        = [azurerm_key_vault_secret.rcm_sqldb_kv]
+  key_vault_password {
+    linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
+    secret_name         = "vj-sqldb-access-key-dev"
+  }
+}
+
 
 
 
@@ -86,7 +98,7 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 #######################################################################################          Datasets             ###########################################################################
 
-
+#parquet
 
 resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-parquet-ds"
@@ -102,9 +114,16 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   compression_codec = "snappy"
 }
 
-
-# resource "azurerm_data_factory_dataset_mysql" "ecm_" {
-#   name                = "example"
+#sqldb
+# resource "azurerm_data_factory_dataset_mysql" "rcm_sql_ds" {
+#   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-sqldb-ds"
 #   data_factory_id     = azurerm_data_factory.example.id
-#   linked_service_name = azurerm_data_factory_linked_service_mysql.example.name
+#   linked_service_name = azurerm_data_factory_linked_service_sql_server.rcm_sqldb_ls.name
+#   parameters = { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
+#   connection {
+#     db_name = "@dataset().db_name"
+#     table_name = "@dataset().schema_name.@dataset().table_name"
+#     host = 
+#   }
+
 # }
