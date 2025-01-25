@@ -31,7 +31,7 @@ resource "databricks_cluster" "rcm_adb_cluster" {
   node_type_id            = data.databricks_node_type.smallest.id
   spark_version           = data.databricks_spark_version.latest_lts.id
   autotermination_minutes = var.cluster_autotermination_minutes
-  num_workers             = var.cluster_num_workers
+  is_single_node = true
 }
 
 output "cluster_url" {
