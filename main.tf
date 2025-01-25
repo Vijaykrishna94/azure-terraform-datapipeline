@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "rcm_adls" {
 resource "azurerm_storage_container" "rcm_container" {
   for_each              = toset(["configs", "landing", "bronze", "silver", "gold"])
   name                  = each.key
-  storage_account_id = azurerm_storage_account.rcm_adls.id
+  storage_account_id    = azurerm_storage_account.rcm_adls.id
   container_access_type = "private"
 }
 
@@ -31,7 +31,7 @@ resource "azurerm_storage_container" "rcm_container" {
 
 # Setting up adf account
 resource "azurerm_data_factory" "rcm_adf" {
-  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adf"
+  name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adf"
   identity {
     type = "SystemAssigned"
   }

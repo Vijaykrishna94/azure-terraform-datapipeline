@@ -1,5 +1,5 @@
 data "azurerm_client_config" "current" {}
-
+# COnfiguring Key Vault
 resource "azurerm_key_vault" "rcm_kv" {
   name                        = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv"
   location                    = azurerm_resource_group.rcm_rg.location
@@ -31,7 +31,7 @@ resource "azurerm_key_vault" "rcm_kv" {
 }
 
 
-
+#######################################################################################          Access Policies                 ###########################################################################
 
 resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
   key_vault_id = azurerm_key_vault.rcm_kv.id
@@ -44,7 +44,7 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-principal" {
   secret_permissions = [
     "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
   ]
-  depends_on = [ azuread_service_principal.azure_adf_sp ]
+  depends_on = [azuread_service_principal.azure_adf_sp]
 }
 
 
@@ -59,7 +59,7 @@ resource "azurerm_key_vault_access_policy" "rcm-adf-mi" {
   secret_permissions = [
     "Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"
   ]
-  depends_on = [ azuread_service_principal.azure_adls_sp ]
+  depends_on = [azuread_service_principal.azure_adls_sp]
 }
 
 
@@ -75,31 +75,34 @@ resource "azurerm_key_vault_access_policy" "rcm-adls-principal" {
   secret_permissions = [
     "Get", "List"
   ]
-  depends_on = [ azuread_service_principal.azure_adls_sp ]
+  depends_on = [azuread_service_principal.azure_adls_sp]
 }
 
+
+
+#######################################################################################          Secrets Creation             ###########################################################################
 
 
 resource "azurerm_key_vault_secret" "rcm_sqldb_kv" {
   name         = "vj-sqldb-access-key-dev"
-  value        =  local.admin_password
+  value        = local.admin_password
   key_vault_id = azurerm_key_vault.rcm_kv.id
-  depends_on = [azurerm_mssql_database.rcm_db]
+  depends_on   = [azurerm_mssql_database.rcm_db]
 }
 
 
 data "azurerm_storage_account" "rcm_adls_key" {
-  name                     = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}storage"
-  resource_group_name      = azurerm_resource_group.rcm_rg.name
-  depends_on = [ azurerm_storage_account.rcm_adls ]
+  name                = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}storage"
+  resource_group_name = azurerm_resource_group.rcm_rg.name
+  depends_on          = [azurerm_storage_account.rcm_adls]
 }
 
 
 resource "azurerm_key_vault_secret" "rcm_adls_kv" {
   name         = "vj-adls-access-key-dev"
-  value        =  data.azurerm_storage_account.rcm_adls_key.primary_access_key
+  value        = data.azurerm_storage_account.rcm_adls_key.primary_access_key
   key_vault_id = azurerm_key_vault.rcm_kv.id
-  depends_on = [ azurerm_storage_account.rcm_adls ]
+  depends_on   = [azurerm_storage_account.rcm_adls]
 }
 
 
@@ -108,5 +111,5 @@ resource "azurerm_key_vault_secret" "rcm_adb_kv" {
   name         = "vj-adb-access-key-dev"
   value        = databricks_token.pat.token_value
   key_vault_id = azurerm_key_vault.rcm_kv.id
-  depends_on = [ databricks_token.pat ]
+  depends_on   = [databricks_token.pat]
 }
