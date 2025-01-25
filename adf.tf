@@ -5,6 +5,7 @@
 
 
 
+#######################################################################################          Linked Services            ###########################################################################
 
 
 # azure keyvault linked service
@@ -80,3 +81,20 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
   depends_on = [ databricks_cluster.rcm_adb_cluster ]
 }
 
+
+
+
+#######################################################################################          Datasets             ###########################################################################
+
+
+
+resource "azurerm_data_factory_dataset_parquet" "example" {
+  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-parquet-ds"
+  data_factory_id     = azurerm_data_factory.rcm_adf.id
+  linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
+  depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
+  parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
+  azure_blob_fs_location {
+  }
+  compression_codec = "snappy"
+}
