@@ -95,7 +95,7 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
   parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
   azure_blob_fs_location {
-    path = "@dataset.container/@dataset.file_path/@dataset.file_name"
+    path = "@dataset().container/@dataset().file_path/@dataset().file_name"
   }
   compression_codec = "snappy"
 }
