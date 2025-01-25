@@ -24,7 +24,7 @@ data "databricks_spark_version" "latest_lts" {
 }
 
 resource "databricks_cluster" "rcm_adb_cluster" {
-  cluster_name            = var.cluster_name
+  cluster_name            = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
   node_type_id            = data.databricks_node_type.smallest.id
   spark_version           = data.databricks_spark_version.latest_lts.id
   autotermination_minutes = var.cluster_autotermination_minutes

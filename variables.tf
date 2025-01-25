@@ -38,11 +38,7 @@ variable "admin_password" {
 
 
 
-variable "cluster_name" {
-  description = "A name for the cluster."
-  type        = string
-  default     = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
-}
+
 
 variable "cluster_autotermination_minutes" {
   description = "How many minutes before automatically terminating due to inactivity."
