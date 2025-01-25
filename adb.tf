@@ -1,14 +1,17 @@
+
+# Creating Access Token to be userd by service principal
 resource "databricks_token" "pat" {
-  comment  = "Terraform Provisioning"
+  comment = "Terraform Provisioning"
   // 100 day token
   lifetime_seconds = 8640000
-    depends_on = [
-     azurerm_databricks_workspace.rcm_adb
+  depends_on = [
+    azurerm_databricks_workspace.rcm_adb
   ]
 }
 
 
 
+#######################################################################################          Cluster Configuration             ###########################################################################
 
 
 # Create the cluster with the "smallest" amount
@@ -32,5 +35,5 @@ resource "databricks_cluster" "rcm_adb_cluster" {
 }
 
 output "cluster_url" {
- value = databricks_cluster.rcm_adb_cluster.url
+  value = databricks_cluster.rcm_adb_cluster.url
 }
