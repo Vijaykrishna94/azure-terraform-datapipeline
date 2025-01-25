@@ -89,12 +89,22 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 
 resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
-  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-parquet-ds"
+  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-parquet-ds"
   data_factory_id     = azurerm_data_factory.rcm_adf.id
   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
   depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
   parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
   azure_blob_fs_location {
+     path =  "@dataset().file_path"
+    file_system =  "@dataset().container"
+    filename =  "@dataset().file_name"
   }
   compression_codec = "snappy"
 }
+
+
+# resource "azurerm_data_factory_dataset_mysql" "ecm_" {
+#   name                = "example"
+#   data_factory_id     = azurerm_data_factory.example.id
+#   linked_service_name = azurerm_data_factory_linked_service_mysql.example.name
+# }
