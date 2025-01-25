@@ -68,7 +68,7 @@ data "databricks_cluster" "current_rcm_adb_cluster" {
 }
 
 resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
-  name                = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
+  name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls"
   data_factory_id     = azurerm_data_factory.rcm_adf.id
   description         = "ADB Linked Service via Access Token"
   existing_cluster_id = data.databricks_cluster.current_rcm_adb_cluster.cluster_id
