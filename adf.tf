@@ -129,9 +129,9 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
 # }
 
 
-resource "azurerm_data_factory_dataset_azure_sql_table" "v" {
+resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
   name              = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-sqldb-ds"
-  data_factory_id   = azurerm_data_factory.rcm_adf
+  data_factory_id   = azurerm_data_factory.rcm_adf.id
   linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
   parameters =  { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
   connection {
