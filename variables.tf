@@ -36,6 +36,24 @@ variable "admin_password" {
   default     = null
 }
 
+variable "loc_bronze" {
+  type        = string
+  description = "Blob Storage Location"
+  default     = "bronze"
+}
+
+variable "loc_silver" {
+  type        = string
+  description = "Blob Storage Location"
+  default     = "silver"
+}
+
+variable "loc_gold" {
+  type        = string
+  description = "Blob Storage Location"
+  default     = "gold"
+}
+
 
 
 
