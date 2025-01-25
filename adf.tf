@@ -114,16 +114,30 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   compression_codec = "snappy"
 }
 
-#sqldb
+# #sqldb
 # resource "azurerm_data_factory_dataset_mysql" "rcm_sql_ds" {
 #   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-sqldb-ds"
-#   data_factory_id     = azurerm_data_factory.example.id
-#   linked_service_name = azurerm_data_factory_linked_service_sql_server.rcm_sqldb_ls.name
+#   data_factory_id     = azurerm_data_factory.rcm_adf.id
+#   linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.name
 #   parameters = { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
 #   connection {
 #     db_name = "@dataset().db_name"
-#     table_name = "@dataset().schema_name.@dataset().table_name"
-#     host = 
+#     table_name =  "@dataset().schema_name.@dataset().table_name"
+#     host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
 #   }
 
 # }
+
+
+resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
+  name              = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-sqldb-ds"
+  data_factory_id   = azurerm_data_factory.rcm_adf.id
+  linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
+  parameters =  { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
+  connection {
+    db_name = "@dataset().db_name"
+    table_name ="@dataset().schema_name.@dataset().table_name"
+    host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
+  }
+
+}
