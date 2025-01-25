@@ -88,7 +88,7 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 
 
-resource "azurerm_data_factory_dataset_parquet" "example" {
+resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-parquet-ds"
   data_factory_id     = azurerm_data_factory.rcm_adf.id
   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
