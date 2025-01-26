@@ -118,7 +118,7 @@ resource "azapi_resource" "rcm_sqldb_ds" {
   type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
   parent_id = azurerm_data_factory.rcm_adf.id
   name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
-  body = jsonencode({
+  body = {
     properties = {
       annotations = [
       ]
@@ -156,7 +156,7 @@ resource "azapi_resource" "rcm_sqldb_ds" {
         table  = "@dataset().table_name"
       }
     }
-  })
+  }
 }
 
 
