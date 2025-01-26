@@ -127,9 +127,9 @@ resource "azapi_resource" "rcm_sqldb_ds" {
       ]
       description = "string"
       linkedServiceName = {
-        # parameters = {
-        #   db_name = "@dataset().db_name"
-        # }
+        parameters = {
+          db_name = "@dataset().db_name"
+        }
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
         type          = "LinkedServiceReference"
       }
