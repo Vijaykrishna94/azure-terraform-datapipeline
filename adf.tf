@@ -186,8 +186,35 @@ resource "azapi_resource" "rcm_flatfile_ds" {
         }
       }
 
-      schema = []
-    
+      schema = [{
+                name= "database",
+                type= "String"
+            },
+            {
+                name= "datasource",
+                type= "String"
+            },
+            {
+                name= "tablename",
+                type= "String"
+            },
+            {
+                name= "loadtype",
+                type= "String"
+            },
+            {
+                name= "watermark",
+                type= "String"
+            },
+            {
+                name= "is_active",
+                type= "String"
+            },
+            {
+                name= "targetpath",
+                type= "String"
+            }
+            ]
     type = "DelimitedText"
     typeProperties = {
     columnDelimiter = ","
