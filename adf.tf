@@ -126,9 +126,6 @@ resource "azapi_resource" "rcm_sqldb_ds" {
       annotations = [
       ]
       description = "string"
-      folder = {
-        name = "string"
-      }
       linkedServiceName = {
         # parameters = {
         #   db_name = "@dataset().db_name"
