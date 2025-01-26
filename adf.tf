@@ -130,33 +130,32 @@ resource "azapi_resource" "rcm_sqldb_ds" {
         name = "string"
       }
       linkedServiceName = {
-        parameters = {
-          db_name = "@dataset().db_name"
-        }
+        # parameters = {
+        #   db_name = "@dataset().db_name"
+        # }
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
         type          = "LinkedServiceReference"
       }
-      parameters = {
-        db_name : {
-          type = "string"
-        }
-      }
-      parameters = {
-        schema_name : {
-          type = "string"
-        }
-      }
-      parameters = {
-        table_name : {
-          type = "string"
-        }
-      }
-      schema = []
+      # parameters = {
+      #   db_name : {
+      #     type = "string"
+      #   }
+      # }
+      # parameters = {
+      #   schema_name : {
+      #     type = "string"
+      #   }
+      # }
+      # parameters = {
+      #   table_name : {
+      #     type = "string"
+      #   }
+      # }
       type   = "AzureSqlTable"
       // For remaining properties, see Dataset objects
       typeProperties = {
-        schema = "@dataset().schema_name"
-        table  = "@dataset().table_name"
+        schema = "xyz"
+        table  = "abc"
       }
     }
   }
