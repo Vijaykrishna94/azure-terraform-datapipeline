@@ -96,9 +96,66 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 
 
-#######################################################################################          Datasets             ###########################################################################
+#######################################################################################           Datasets            ###########################################################################
 
 #parquet
+
+resource "azapi_resource" "vj_rcm__sqldb_dataset" {
+  type = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  name = "vj_rcm_dev_generic_sqldb_ds"
+  parent_id = azurerm_data_factory.rcm_adf.id
+  body = jsonencode({
+    properties = {
+      annotations = [
+        
+      ]
+      description = "string"
+      folder = {
+        name = "string"
+      }
+      linkedServiceName = {
+        parameters = {
+            "db_name": {
+            "value": "@dataset().db_name",
+            "type": "Expression"
+                }
+            }
+        referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
+        type = "LinkedServiceReference"
+      }
+      parameters = {
+           "db_name": {
+                "type": "string"
+            },
+            "schema_name": {
+                "type": "string"
+            },
+            "table_name": {
+                "type": "string"
+            }
+      }
+      schema = []
+      type = "AzureSqlTable"
+      // For remaining properties, see Dataset objects
+      "typeProperties": {
+          "schema": {
+              "value": "@dataset().schema_name",
+              "type": "Expression"
+          },
+          "table": {
+              "value": "@dataset().table_name",
+              "type": "Expression"
+          }
+      }
+    }
+  }
+  )
+}
+
+
+
+
+
 
 resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   name                = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_parquet_ds"
@@ -116,19 +173,26 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
 
 
 
-resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
-  name              = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
-  data_factory_id   = azurerm_data_factory.rcm_adf.id
-  linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
-  parameters =  { "db_name" : "", "schema_name" : "","table_name" : "" }
-  schema = "@dataset().schema_name"
-  table = "@dataset().table_name"
-  depends_on = [ azurerm_data_factory.rcm_adf, azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls ]
+# resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
+#   name              = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
+#   data_factory_id   = azurerm_data_factory.rcm_adf.id
+#   linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
+#   parameters =  { "db_name" : "", "schema_name" : "","table_name" : "" }
+#   schema = "@dataset().schema_name"
+#   table = "@dataset().table_name"
+#   depends_on = [ azurerm_data_factory.rcm_adf, azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls ]
 
-  connection {
-    host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
-    db_name = "@dataset().db_name"
-    schema = "@dataset().schema_name"
-    table = "@dataset().table_name"
-  }
-}
+#   connection {
+#     host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
+#     parameters ={
+#           "db_name": {
+#           "value": "@dataset().db_name",
+#           "type": "Expression"
+#                 }
+#       }
+#     # db_name = "@dataset().db_name"
+#     # schema = "@dataset().schema_name"
+#     # table = "@dataset().table_name"
+#   }
+# }
+
