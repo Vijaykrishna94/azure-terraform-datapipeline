@@ -113,7 +113,7 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   compression_codec = "snappy"
 }
 
-# sql table
+# Sql Table
 resource "azapi_resource" "rcm_sqldb_ds" {
   type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
   parent_id = azurerm_data_factory.rcm_adf.id
@@ -159,6 +159,62 @@ resource "azapi_resource" "rcm_sqldb_ds" {
   }
 }
 
+# delimeted file
+
+resource "azapi_resource" "rcm_flatfile_ds" {
+  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  parent_id = azurerm_data_factory.rcm_adf.id
+  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds"
+  schema_validation_enabled = false
+  body = {
+    properties = {
+      annotations = []
+      description = "string"
+      linkedServiceName = {
+        referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adls-ls"
+        type = "LinkedServiceReference"
+      }
+      parameters = {
+        container = {
+          type = "string"
+        }
+        folder = {
+          type = "string"
+        }
+        file_name = {
+          type = "string"
+        }
+      }
+
+      schema = []
+    
+    type = "DelimitedText"
+    typeProperties = {
+    columnDelimiter = ","
+    escapeChar = "\\"
+    firstRowAsHeader = true
+    location = {
+      fileName = {
+                  value = "@dataset().file_name"
+                  type = "Expression"
+                  }
+      folderPath = {
+                  value = "@dataset().folder"
+                  type = "Expression"
+                  }
+      container = {
+                  value = "@dataset().container"
+                  type = "Expression"
+                  }
+      type = "AzureBlobFSLocation"
+      // For remaining properties, see DatasetLocation objects
+
+    }
+    quoteChar = "\""
+      }
+    } 
+  }
+}
 
 
 
