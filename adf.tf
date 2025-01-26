@@ -137,17 +137,17 @@ resource "azapi_resource" "rcm_sqldb_ds" {
         type          = "LinkedServiceReference"
       }
       parameters = {
-        db_name = {
+        db_name : {
           type = "string"
         }
       }
       parameters = {
-        schema_name = {
+        schema_name : {
           type = "string"
         }
       }
       parameters = {
-        table_name = {
+        table_name : {
           type = "string"
         }
       }
