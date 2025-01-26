@@ -99,15 +99,28 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 #######################################################################################           Datasets            ###########################################################################
 
 #parquet
+# resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
+#   name                = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_parquet_ds"
+#   data_factory_id     = azurerm_data_factory.rcm_adf.id
+#   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
+#   depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
+#   parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
+#   azure_blob_fs_location {
+#     path =  "@dataset().file_path"
+#     file_system =  "@dataset().container"
+#     filename =  "@dataset().file_name"
+#   }
+#   compression_codec = "snappy"
+# }
 
-resource "azapi_resource" "vj_rcm__sqldb_dataset" {
+
+resource "azapi_resource" "rcm_sqldb_ds" {
   type = "Microsoft.DataFactory/factories/datasets@2018-06-01"
-  name = "vj_rcm_dev_generic_sqldb_ds"
   parent_id = azurerm_data_factory.rcm_adf.id
+  name = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
   body = jsonencode({
     properties = {
       annotations = [
-        
       ]
       description = "string"
       folder = {
@@ -115,62 +128,36 @@ resource "azapi_resource" "vj_rcm__sqldb_dataset" {
       }
       linkedServiceName = {
         parameters = {
-            "db_name": {
-            "value": "@dataset().db_name",
-            "type": "Expression"
-                }
-            }
+          db_name = "@dataset().db_name"
+        }
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
         type = "LinkedServiceReference"
       }
       parameters = {
-           "db_name": {
-                "type": "string"
-            },
-            "schema_name": {
-                "type": "string"
-            },
-            "table_name": {
-                "type": "string"
-            }
+        db_name = {
+          type = "string"
+        }
+      }
+      parameters = {
+        schema_name = {
+          type = "string"
+        }
+      }
+      parameters = {
+        table_name = {
+          type = "string"
+        }
       }
       schema = []
       type = "AzureSqlTable"
       // For remaining properties, see Dataset objects
-      "typeProperties": {
-          "schema": {
-              "value": "@dataset().schema_name",
-              "type": "Expression"
-          },
-          "table": {
-              "value": "@dataset().table_name",
-              "type": "Expression"
-          }
+      typeProperties = {
+        schema = "@dataset().schema_name"
+        table = "@dataset().table_name"
       }
     }
-  }
-  )
+  })
 }
-
-
-
-
-
-
-resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
-  name                = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_parquet_ds"
-  data_factory_id     = azurerm_data_factory.rcm_adf.id
-  linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
-  depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
-  parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
-  azure_blob_fs_location {
-    path =  "@dataset().file_path"
-    file_system =  "@dataset().container"
-    filename =  "@dataset().file_name"
-  }
-  compression_codec = "snappy"
-}
-
 
 
 # resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
