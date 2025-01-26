@@ -127,5 +127,5 @@ resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
     host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
     db_name = "@dataset().db_name"
   }
-  schema=[]
+  schema="[]"
 }
