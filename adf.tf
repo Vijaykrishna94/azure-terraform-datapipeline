@@ -35,7 +35,7 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "rcm_sql_ls" {
   name              = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
   data_factory_id   = azurerm_data_factory.rcm_adf.id
   connection_string = "Integrated Security=False;Data Source = ${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net ;Initial Catalog=@{linkedService().db_name};User ID=${var.admin_username};connection timeout=30"
-  parameters = { "db_name":"string" }
+  parameters        = { "db_name" : "string" }
   depends_on        = [azurerm_key_vault_secret.rcm_sqldb_kv]
   key_vault_password {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
@@ -75,7 +75,7 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "rcm_adls_
 
 # databricks ls
 
-data "databricks_cluster" "current_rcm_adb_cluster" { 
+data "databricks_cluster" "current_rcm_adb_cluster" {
   cluster_name = "${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}cluster"
 
 }
@@ -89,8 +89,8 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
     secret_name         = "vj-adb-access-key-dev"
   }
-  adb_domain   = databricks_cluster.rcm_adb_cluster.url
-  depends_on = [ databricks_cluster.rcm_adb_cluster ]
+  adb_domain = databricks_cluster.rcm_adb_cluster.url
+  depends_on = [databricks_cluster.rcm_adb_cluster]
 }
 
 
@@ -115,9 +115,9 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 
 resource "azapi_resource" "rcm_sqldb_ds" {
-  type = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
   parent_id = azurerm_data_factory.rcm_adf.id
-  name = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
+  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
   body = jsonencode({
     properties = {
       annotations = [
@@ -131,7 +131,7 @@ resource "azapi_resource" "rcm_sqldb_ds" {
           db_name = "@dataset().db_name"
         }
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
-        type = "LinkedServiceReference"
+        type          = "LinkedServiceReference"
       }
       parameters = {
         db_name = {
@@ -148,12 +148,12 @@ resource "azapi_resource" "rcm_sqldb_ds" {
           type = "string"
         }
       }
-      schema = []
-      type = "AzureSqlTable"
+      schema = "[]"
+      type   = "AzureSqlTable"
       // For remaining properties, see Dataset objects
       typeProperties = {
         schema = "@dataset().schema_name"
-        table = "@dataset().table_name"
+        table  = "@dataset().table_name"
       }
     }
   })
