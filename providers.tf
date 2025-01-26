@@ -17,6 +17,10 @@ terraform {
       source  = "hashicorp/azuread"
       version = ">= 3.0.0"
     }
+    azapi = {
+      source = "azure/azapi"
+    }
+
   }
   backend "azurerm" {
     resource_group_name  = "vj-terraform-rg"
@@ -42,4 +46,8 @@ provider "azuread" {
 # Configure the Azure Active Directory Provider
 provider "databricks" {
   host = azurerm_databricks_workspace.rcm_adb.workspace_url
+}
+
+provider "azapi" {
+  use_oidc = true
 }

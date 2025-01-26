@@ -19,7 +19,7 @@ resource "azurerm_storage_account" "rcm_adls" {
 
 # Setting up containers
 resource "azurerm_storage_container" "rcm_container" {
-  for_each              = toset(["configs", "landing", "bronze", "silver", "gold","audit"])
+  for_each              = toset(["configs", "landing", "bronze", "silver", "gold", "audit"])
   name                  = each.key
   storage_account_id    = azurerm_storage_account.rcm_adls.id
   container_access_type = "private"
