@@ -187,31 +187,31 @@ resource "azapi_resource" "rcm_flatfile_ds" {
       }
 
       schema = [{
-                name= "database",
+                name= "database"
                 type= "String"
             },
             {
-                name= "datasource",
+                name= "datasource"
                 type= "String"
             },
             {
-                name= "tablename",
+                name= "tablename"
                 type= "String"
             },
             {
-                name= "loadtype",
+                name= "loadtype"
                 type= "String"
             },
             {
-                name= "watermark",
+                name= "watermark"
                 type= "String"
             },
             {
-                name= "is_active",
+                name= "is_active"
                 type= "String"
             },
             {
-                name= "targetpath",
+                name= "targetpath"
                 type= "String"
             }
             ]
