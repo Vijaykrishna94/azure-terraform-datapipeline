@@ -35,7 +35,7 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "rcm_sql_ls" {
   name              = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
   data_factory_id   = azurerm_data_factory.rcm_adf.id
   connection_string = "Integrated Security=False;Data Source = ${var.resource_group_name_prefix}${var.proj_name_prefix}${var.env_prefix}sql.database.windows.net ;Initial Catalog=@{linkedService().db_name};User ID=${var.admin_username};connection timeout=30"
-  parameters = { "db_name" : "string" }
+  parameters = { "db_name":"@dataset().db_name" }
   depends_on        = [azurerm_key_vault_secret.rcm_sqldb_kv]
   key_vault_password {
     linked_service_name = azurerm_data_factory_linked_service_key_vault.rcm_kv_ls.name
@@ -107,26 +107,13 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
   parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
   azure_blob_fs_location {
-     path =  "@dataset().file_path"
+    path =  "@dataset().file_path"
     file_system =  "@dataset().container"
     filename =  "@dataset().file_name"
   }
   compression_codec = "snappy"
 }
 
-# #sqldb
-# resource "azurerm_data_factory_dataset_mysql" "rcm_sql_ds" {
-#   name                = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-generic-sqldb-ds"
-#   data_factory_id     = azurerm_data_factory.rcm_adf.id
-#   linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.name
-#   parameters = { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
-#   connection {
-#     db_name = "@dataset().db_name"
-#     table_name =  "@dataset().schema_name.@dataset().table_name"
-#     host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
-#   }
-
-# }
 
 
 resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
@@ -134,7 +121,7 @@ resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
   data_factory_id   = azurerm_data_factory.rcm_adf.id
   linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
 
-  parameters =  { "db_name" : "string", "schema_name" : "string","table_name" : "string" }
+  parameters =  { "db_name" : "@dataset().db_name", "schema_name" : "@dataset().schema_name","table_name" : "@dataset().table_name" }
   schema = "@dataset().schema_name"
   table = "@dataset().table_name"
   depends_on = [ azurerm_data_factory.rcm_adf, azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls ]
