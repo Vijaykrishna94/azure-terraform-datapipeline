@@ -116,18 +116,20 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
 
 
 
-resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
-  name              = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
-  data_factory_id   = azurerm_data_factory.rcm_adf.id
-  linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
-  parameters =  { "db_name" : "", "schema_name" : "","table_name" : "" }
-  schema = "@dataset().schema_name"
-  table = "@dataset().table_name"
-  depends_on = [ azurerm_data_factory.rcm_adf, azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls ]
+# resource "azurerm_data_factory_dataset_azure_sql_table" "rcm_sqltbl_ds" {
+#   name              = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
+#   data_factory_id   = azurerm_data_factory.rcm_adf.id
+#   linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.id
+#   parameters =  { "db_name" : "@dataset().db_name", "schema_name" : "@dataset().schema_name","table_name" : "@dataset().table_name" }
+#   schema = "@dataset().schema_name"
+#   table = "@dataset().table_name"
+#   depends_on = [ azurerm_data_factory.rcm_adf, azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls ]
 
-  connection {
-    host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
-    db_name = "@dataset().db_name"
-  }
+#   connection {
+#     host = azurerm_data_factory_linked_service_azure_sql_database.rcm_sql_ls.host
+#     db_name = "@dataset().db_name"
+#     schema = "@dataset().schema_name"
+#     table = "@dataset().table_name"
+#   }
 
-}
+# }
