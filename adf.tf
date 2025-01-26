@@ -148,7 +148,7 @@ resource "azapi_resource" "rcm_sqldb_ds" {
           type = "string"
         }
       }
-      schema = "[]"
+      schema = []
       type   = "AzureSqlTable"
       // For remaining properties, see Dataset objects
       typeProperties = {
