@@ -120,7 +120,7 @@ resource "azapi_resource" "rcm_sqldb_ds" {
   name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
 
   body = {
-    api_version = "2018-06-01"
+    apiVersion = "2018-06-01"
     properties = {
       annotations = [
       ]
