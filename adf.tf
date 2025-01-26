@@ -137,17 +137,14 @@ resource "azapi_resource" "rcm_sqldb_ds" {
         db_name = {
           type = "string"
         }
-      }
-      parameters = {
         schema_name = {
           type = "string"
         }
-      }
-      parameters = {
         table_name = {
           type = "string"
         }
       }
+
       schema = []
       type   = "AzureSqlTable"
       // For remaining properties, see Dataset objects
