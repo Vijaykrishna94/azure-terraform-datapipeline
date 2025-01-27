@@ -435,6 +435,7 @@ resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
   type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
   name      = azurerm_data_factory_pipeline.vj_rcm_active_tables_pl.name
   parent_id = azurerm_data_factory_pipeline.vj_rcm_active_tables_pl.id
+  depends_on = [ azurerm_data_factory_pipeline.vj_rcm_active_tables_pl ]
 
   body = {
         variables = {
