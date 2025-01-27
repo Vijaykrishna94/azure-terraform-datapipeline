@@ -308,7 +308,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
   data_factory_id = azurerm_data_factory.rcm_adf.id
   variables = {
       "items" = ""
-      "type" = "Array"
+      type = "Array"
   }
   activities_json = <<JSON
 [
