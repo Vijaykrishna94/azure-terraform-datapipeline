@@ -120,7 +120,7 @@ resource "azapi_resource" "rcm_dl_ls" {
       // For remaining properties, see LinkedService objects
       type = "AzureDatabricksDeltaLake"
       typeProperties = {
-        domain = azurerm_databricks_workspace.rcm_adb.workspace_url
+        domain = "https://"+azurerm_databricks_workspace.rcm_adb.workspace_url
         clusterId = data.databricks_cluster.current_rcm_adb_cluster.cluster_id
         accessToken = {
           type = "AzureKeyVaultSecret"
