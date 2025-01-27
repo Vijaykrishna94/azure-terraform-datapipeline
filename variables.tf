@@ -69,3 +69,11 @@ variable "cluster_num_workers" {
   type        = number
   default     = 1
 }
+
+
+variable "items" {
+  type        = list(string)
+  description = "Items"
+  default = [ "" ]
+
+}

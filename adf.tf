@@ -306,9 +306,8 @@ resource "azapi_resource" "rcm_dl_ds" {
 resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
   name            = "pl_active_tables"
   data_factory_id = azurerm_data_factory.rcm_adf.id
-  variables = {
-      "items" = ""
-      type = "Array"
+  variables =  {
+     "items" = jsonencode([""])
   }
   activities_json = <<JSON
 [
@@ -421,7 +420,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
                             "key": "item",
                             "value": {
                                 "type": "Expression",
-                                "content": "@variables('items')"
+                                "content": "@json(variables('items'))"
                             }
                         }
                     ],
