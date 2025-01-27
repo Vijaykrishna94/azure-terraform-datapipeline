@@ -306,8 +306,8 @@ resource "azapi_resource" "rcm_dl_ds" {
 resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
   name            = "pl_active_tables"
   data_factory_id = azurerm_data_factory.rcm_adf.id
-  variables =  {
-     "items" = jsonencode([""])
+  variables = {
+      "items" = "items"
   }
   activities_json = <<JSON
 [
@@ -420,7 +420,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
                             "key": "item",
                             "value": {
                                 "type": "Expression",
-                                "content": "@json(variables('items'))"
+                                "content": "@variables('items')"
                             }
                         }
                     ],
@@ -429,4 +429,18 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
             }
 ]
   JSON
+}
+
+resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
+  type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
+  name      = azurerm_data_factory_pipeline.vj_rcm_active_tables_pl.name
+  parent_id = azurerm_data_factory_pipeline.vj_rcm_active_tables_pl.id
+
+  body = {
+        variables = {
+            items = {
+                type = "Array"
+            }
+        }
+  }
 }
