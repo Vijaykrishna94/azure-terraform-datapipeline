@@ -89,9 +89,9 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 
 # delta lake
 resource "azapi_resource" "rcm_dl_ls" {
-  type = "Microsoft.DataFactory/factories/linkedservices@2018-06-01"
+  type      = "Microsoft.DataFactory/factories/linkedservices@2018-06-01"
   parent_id = azurerm_data_factory.rcm_adf.id
-  name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-dl-ls"
+  name      = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-dl-ls"
   body = {
     properties = {
       annotations = []
@@ -99,16 +99,16 @@ resource "azapi_resource" "rcm_dl_ls" {
       // For remaining properties, see LinkedService objects
       type = "AzureDatabricksDeltaLake"
       typeProperties = {
-        domain = "https://${azurerm_databricks_workspace.rcm_adb.workspace_url}"
+        domain    = "https://${azurerm_databricks_workspace.rcm_adb.workspace_url}"
         clusterId = data.databricks_cluster.current_rcm_adb_cluster.cluster_id
         accessToken = {
           type = "AzureKeyVaultSecret"
           // For remaining properties, see SecretBase objects
-            secretName = "vj-adb-access-key-dev"
-            store = {
-              referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv-ls"
-              type = "LinkedServiceReference"
-            }
+          secretName = "vj-adb-access-key-dev"
+          store = {
+            referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv-ls"
+            type          = "LinkedServiceReference"
+          }
         }
       }
     }
@@ -122,21 +122,21 @@ resource "azurerm_data_factory_dataset_parquet" "rcm_parquet_ds" {
   name                = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_parquet_ds"
   data_factory_id     = azurerm_data_factory.rcm_adf.id
   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls.name
-  depends_on = [ azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls ]
-  parameters = { "container" : "string", "file_path" : "string","file_name" : "string" }
+  depends_on          = [azurerm_data_factory_linked_service_data_lake_storage_gen2.rcm_adls_ls]
+  parameters          = { "container" : "string", "file_path" : "string", "file_name" : "string" }
   azure_blob_fs_location {
-    path =  "@dataset().file_path"
-    file_system =  "@dataset().container"
-    filename =  "@dataset().file_name"
+    path        = "@dataset().file_path"
+    file_system = "@dataset().container"
+    filename    = "@dataset().file_name"
   }
   compression_codec = "snappy"
 }
 
 # Sql Table
 resource "azapi_resource" "rcm_sqldb_ds" {
-  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
-  parent_id = azurerm_data_factory.rcm_adf.id
-  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
+  type                      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  parent_id                 = azurerm_data_factory.rcm_adf.id
+  name                      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_sqldb_ds"
   schema_validation_enabled = false
 
   body = {
@@ -147,10 +147,10 @@ resource "azapi_resource" "rcm_sqldb_ds" {
       description = "string"
       linkedServiceName = {
         parameters = {
-          db_name = { 
-              value = "@dataset().db_name"
-              type  = "Expression"
-            } 
+          db_name = {
+            value = "@dataset().db_name"
+            type  = "Expression"
+          }
         }
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-sql-ls"
         type          = "LinkedServiceReference"
@@ -181,9 +181,9 @@ resource "azapi_resource" "rcm_sqldb_ds" {
 # delimeted file
 
 resource "azapi_resource" "rcm_flatfile_ds" {
-  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
-  parent_id = azurerm_data_factory.rcm_adf.id
-  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds"
+  type                      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  parent_id                 = azurerm_data_factory.rcm_adf.id
+  name                      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds"
   schema_validation_enabled = false
   body = {
     properties = {
@@ -191,7 +191,7 @@ resource "azapi_resource" "rcm_flatfile_ds" {
       description = "string"
       linkedServiceName = {
         referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adls-ls"
-        type = "LinkedServiceReference"
+        type          = "LinkedServiceReference"
       }
       parameters = {
         container = {
@@ -206,96 +206,96 @@ resource "azapi_resource" "rcm_flatfile_ds" {
       }
 
       schema = [{
-                name= "database"
-                type= "String"
-            },
-            {
-                name= "datasource"
-                type= "String"
-            },
-            {
-                name= "tablename"
-                type= "String"
-            },
-            {
-                name= "loadtype"
-                type= "String"
-            },
-            {
-                name= "watermark"
-                type= "String"
-            },
-            {
-                name= "is_active"
-                type= "String"
-            },
-            {
-                name= "targetpath"
-                type= "String"
-            }
-            ]
-    type = "DelimitedText"
-    typeProperties = {
-    columnDelimiter = ","
-    escapeChar = "\\"
-    firstRowAsHeader = true
-    location = {
-      fileName = {
-                  value = "@dataset().file_name"
-                  type = "Expression"
-                  }
-      folderPath = {
-                  value = "@dataset().folder"
-                  type = "Expression"
-                  }
-      container = {
-                  value = "@dataset().container"
-                  type = "Expression"
-                  }
-      type = "AzureBlobFSLocation"
-      // For remaining properties, see DatasetLocation objects
+        name = "database"
+        type = "String"
+        },
+        {
+          name = "datasource"
+          type = "String"
+        },
+        {
+          name = "tablename"
+          type = "String"
+        },
+        {
+          name = "loadtype"
+          type = "String"
+        },
+        {
+          name = "watermark"
+          type = "String"
+        },
+        {
+          name = "is_active"
+          type = "String"
+        },
+        {
+          name = "targetpath"
+          type = "String"
+        }
+      ]
+      type = "DelimitedText"
+      typeProperties = {
+        columnDelimiter  = ","
+        escapeChar       = "\\"
+        firstRowAsHeader = true
+        location = {
+          fileName = {
+            value = "@dataset().file_name"
+            type  = "Expression"
+          }
+          folderPath = {
+            value = "@dataset().folder"
+            type  = "Expression"
+          }
+          container = {
+            value = "@dataset().container"
+            type  = "Expression"
+          }
+          type = "AzureBlobFSLocation"
+          // For remaining properties, see DatasetLocation objects
 
-    }
-    quoteChar = "\""
+        }
+        quoteChar = "\""
       }
-    } 
+    }
   }
 }
 
 
 # Delta Table 
 resource "azapi_resource" "rcm_dl_ds" {
-  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
-  parent_id = azurerm_data_factory.rcm_adf.id
-  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_dl_ds"
+  type                      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  parent_id                 = azurerm_data_factory.rcm_adf.id
+  name                      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_dl_ds"
   schema_validation_enabled = false
-  body ={properties = {
-      annotations = []
-      linkedServiceName = {
+  body = { properties = {
+    annotations = []
+    linkedServiceName = {
       referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-dl-ls"
-      type = "LinkedServiceReference"
+      type          = "LinkedServiceReference"
+    }
+    parameters = {
+      schema_name = {
+        type = "string"
       }
-      parameters = {
-        schema_name = {
-          type = "string"
-        }
-        table_name = {
-          type = "string"
-        }
+      table_name = {
+        type = "string"
       }
-      schema = []
-      type = "AzureDatabricksDeltaLakeDataset"
-      // For remaining properties, see Dataset objects
-      typeProperties = {
-        database = {
-            value = "@dataset().schema_name"
-            type = "Expression"          
-        }
-        table = {
-            value = "@dataset().table_name"
-            type = "Expression"          
-        }
+    }
+    schema = []
+    type   = "AzureDatabricksDeltaLakeDataset"
+    // For remaining properties, see Dataset objects
+    typeProperties = {
+      database = {
+        value = "@dataset().schema_name"
+        type  = "Expression"
       }
+      table = {
+        value = "@dataset().table_name"
+        type  = "Expression"
+      }
+    }
     }
   }
 }
@@ -303,133 +303,133 @@ resource "azapi_resource" "rcm_dl_ds" {
 #######################################################################################           Pipeline            ###########################################################################
 
 
-resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
-  name            = "pl_active_tables"
-  data_factory_id = azurerm_data_factory.rcm_adf.id
-  variables = {
-      "items" = "items"
-  }
-  activities_json = <<JSON
-[
-  {
-                "name": "config_emr_lkp",
-                "type": "Lookup",
-                "dependsOn": [],
-                "policy": {
-                    "timeout": "0.12:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "source": {
-                        "type": "DelimitedTextSource",
-                        "storeSettings": {
-                            "type": "AzureBlobFSReadSettings",
-                            "recursive": true,
-                            "enablePartitionDiscovery": false
-                        },
-                        "formatSettings": {
-                            "type": "DelimitedTextReadSettings"
-                        }
-                    },
-                    "dataset": {
-                        "referenceName": "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds",
-                        "type": "DatasetReference",
-                        "parameters": {
-                            "container": "configs",
-                            "folder": "emr",
-                            "file_name": "load_config.csv"
-                        }
-                    },
-                    "firstRowOnly": false
-                }
-            },
-            {
-                "name": "Iter_Tables",
-                "description": "",
-                "type": "ForEach",
-                "dependsOn": [
-                    {
-                        "activity": "config_emr_lkp",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "items": {
-                        "value": "@activity('config_emr_lkp').output.value",
-                        "type": "Expression"
-                    },
-                    "isSequential": true,
-                    "activities": [
-                        {
-                            "name": "IF_Active",
-                            "type": "IfCondition",
-                            "dependsOn": [],
-                            "userProperties": [],
-                            "typeProperties": {
-                                "expression": {
-                                    "value": "@equals(item().is_active,'1')",
-                                    "type": "Expression"
-                                },
-                                "ifTrueActivities": [
-                                    {
-                                        "name": "Append_Tables",
-                                        "type": "AppendVariable",
-                                        "dependsOn": [],
-                                        "userProperties": [],
-                                        "typeProperties": {
-                                            "variableName": "items",
-                                            "value": {
-                                                "value": "@item()",
-                                                "type": "Expression"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "name": "Collect_tables",
-                "type": "SetVariable",
-                "dependsOn": [
-                    {
-                        "activity": "Iter_Tables",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "pipelineReturnValue",
-                    "value": [
-                        {
-                            "key": "item",
-                            "value": {
-                                "type": "Expression",
-                                "content": "@variables('items')"
-                            }
-                        }
-                    ],
-                    "setSystemVariable": true
-                }
-            }
-]
-  JSON
-}
+# resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
+#   name            = "pl_active_tables"
+#   data_factory_id = azurerm_data_factory.rcm_adf.id
+#   variables = {
+#     "items" = "items"
+#   }
+#   activities_json = <<JSON
+# [
+#   {
+#                 "name": "config_emr_lkp",
+#                 "type": "Lookup",
+#                 "dependsOn": [],
+#                 "policy": {
+#                     "timeout": "0.12:00:00",
+#                     "retry": 0,
+#                     "retryIntervalInSeconds": 30,
+#                     "secureOutput": false,
+#                     "secureInput": false
+#                 },
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "source": {
+#                         "type": "DelimitedTextSource",
+#                         "storeSettings": {
+#                             "type": "AzureBlobFSReadSettings",
+#                             "recursive": true,
+#                             "enablePartitionDiscovery": false
+#                         },
+#                         "formatSettings": {
+#                             "type": "DelimitedTextReadSettings"
+#                         }
+#                     },
+#                     "dataset": {
+#                         "referenceName": "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds",
+#                         "type": "DatasetReference",
+#                         "parameters": {
+#                             "container": "configs",
+#                             "folder": "emr",
+#                             "file_name": "load_config.csv"
+#                         }
+#                     },
+#                     "firstRowOnly": false
+#                 }
+#             },
+#             {
+#                 "name": "Iter_Tables",
+#                 "description": "",
+#                 "type": "ForEach",
+#                 "dependsOn": [
+#                     {
+#                         "activity": "config_emr_lkp",
+#                         "dependencyConditions": [
+#                             "Succeeded"
+#                         ]
+#                     }
+#                 ],
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "items": {
+#                         "value": "@activity('config_emr_lkp').output.value",
+#                         "type": "Expression"
+#                     },
+#                     "isSequential": true,
+#                     "activities": [
+#                         {
+#                             "name": "IF_Active",
+#                             "type": "IfCondition",
+#                             "dependsOn": [],
+#                             "userProperties": [],
+#                             "typeProperties": {
+#                                 "expression": {
+#                                     "value": "@equals(item().is_active,'1')",
+#                                     "type": "Expression"
+#                                 },
+#                                 "ifTrueActivities": [
+#                                     {
+#                                         "name": "Append_Tables",
+#                                         "type": "AppendVariable",
+#                                         "dependsOn": [],
+#                                         "userProperties": [],
+#                                         "typeProperties": {
+#                                             "variableName": "items",
+#                                             "value": {
+#                                                 "value": "@item()",
+#                                                 "type": "Expression"
+#                                             }
+#                                         }
+#                                     }
+#                                 ]
+#                             }
+#                         }
+#                     ]
+#                 }
+#             },
+#             {
+#                 "name": "Collect_tables",
+#                 "type": "SetVariable",
+#                 "dependsOn": [
+#                     {
+#                         "activity": "Iter_Tables",
+#                         "dependencyConditions": [
+#                             "Succeeded"
+#                         ]
+#                     }
+#                 ],
+#                 "policy": {
+#                     "secureOutput": false,
+#                     "secureInput": false
+#                 },
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "variableName": "pipelineReturnValue",
+#                     "value": [
+#                         {
+#                             "key": "item",
+#                             "value": {
+#                                 "type": "Expression",
+#                                 "content": "@variables('items')"
+#                             }
+#                         }
+#                     ],
+#                     "setSystemVariable": true
+#                 }
+#             }
+# ]
+#   JSON
+# }
 
 # resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
 #   type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
