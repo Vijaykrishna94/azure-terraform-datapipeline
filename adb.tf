@@ -33,7 +33,3 @@ resource "databricks_cluster" "rcm_adb_cluster" {
   autotermination_minutes = var.cluster_autotermination_minutes
   num_workers             = 0
 }
-
-output "cluster_url" {
-  value = databricks_cluster.rcm_adb_cluster.url
-}
