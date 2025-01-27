@@ -94,7 +94,47 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "rcm_adb_ls" {
 }
 
 
-
+# delta lake
+resource "azapi_resource" "rcm_dl_ls" {
+  type = "Microsoft.DataFactory/factories/linkedservices@2018-06-01"
+  parent_id = azurerm_data_factory.rcm_adf.id
+  name = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-dl-ls"
+  body = {
+    properties = {
+      annotations = []
+      # connectVia = {
+      #   parameters = {
+      #     {customized property} = ?
+      #   }
+      #   referenceName = "string"
+      #   type = "string"
+      # }
+      description = "string"
+      # parameters = {
+      #   {customized property} = {
+      #     defaultValue = ?
+      #     type = "string"
+      #   }
+      #}
+      # version = "string"
+      // For remaining properties, see LinkedService objects
+      type = "AzureDatabricksDeltaLake"
+      typeProperties = {
+        domain = azurerm_databricks_workspace.rcm_adb.workspace_url
+        clusterId = data.databricks_cluster.current_rcm_adb_cluster.cluster_id
+        accessToken = {
+          type = "AzureKeyVaultSecret"
+          // For remaining properties, see SecretBase objects
+            secretName = "vj-adb-access-key-dev"
+            store = {
+              referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-kv-ls"
+              type = "LinkedServiceReference"
+            }
+        }
+      }
+    }
+  }
+}
 
 #######################################################################################           Datasets            ###########################################################################
 
