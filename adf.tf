@@ -102,21 +102,7 @@ resource "azapi_resource" "rcm_dl_ls" {
   body = {
     properties = {
       annotations = []
-      # connectVia = {
-      #   parameters = {
-      #     {customized property} = ?
-      #   }
-      #   referenceName = "string"
-      #   type = "string"
-      # }
       description = "string"
-      # parameters = {
-      #   {customized property} = {
-      #     defaultValue = ?
-      #     type = "string"
-      #   }
-      #}
-      # version = "string"
       // For remaining properties, see LinkedService objects
       type = "AzureDatabricksDeltaLake"
       typeProperties = {
@@ -284,4 +270,39 @@ resource "azapi_resource" "rcm_flatfile_ds" {
 }
 
 
-
+# Delta Table 
+resource "azapi_resource" "rcm_dl_ds" {
+  type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+  parent_id = azurerm_data_factory.rcm_adf.id
+  name      = "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_dl_ds"
+  schema_validation_enabled = false
+  body ={properties = {
+      annotations = []
+      linkedServiceName = {
+      referenceName = "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-dl-ls"
+      type = "LinkedServiceReference"
+      }
+      parameters = {
+        schema_name = {
+          type = "string"
+        }
+        table_name = {
+          type = "string"
+        }
+      }
+      schema = []
+      type = "AzureDatabricksDeltaLakeDataset"
+      // For remaining properties, see Dataset objects
+      typeProperties = {
+        database = {
+            value = "@dataset().schema_name"
+            type = "Expression"          
+        }
+        table = {
+            value = "@dataset().table_name"
+            type = "Expression"          
+        }
+      }
+    }
+  }
+}
