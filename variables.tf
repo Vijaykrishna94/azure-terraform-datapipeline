@@ -71,9 +71,3 @@ variable "cluster_num_workers" {
 }
 
 
-variable "items" {
-  type        = list(string)
-  description = "Items"
-  default = [ "" ]
-
-}
