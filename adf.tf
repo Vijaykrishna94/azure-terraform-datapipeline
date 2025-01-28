@@ -1328,7 +1328,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Transactions"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Transactions"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1355,7 +1355,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/fact_transaction"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/fact_transaction"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1375,7 +1375,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Departments_F"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Departments_F"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1402,7 +1402,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_department"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_department"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1422,7 +1422,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Patient"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Patient"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1449,7 +1449,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_patient"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_patient"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1469,7 +1469,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/NPI"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/NPI"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1496,7 +1496,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_npi"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_npi"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1516,7 +1516,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/ICD Code"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/ICD Code"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1543,7 +1543,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_icd_code"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_icd_code"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1563,7 +1563,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Providers_F"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Providers_F"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1590,7 +1590,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_provider"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_provider"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1610,7 +1610,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/CPT codes"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/CPT codes"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1637,7 +1637,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/dim_cpt_code"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/dim_cpt_code"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1657,7 +1657,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Encounters"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Encounters"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1677,7 +1677,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/3. Silver/Claims"
+                    "notebookPath": "${data.databricks_current_user.me.home}/3. Silver/Claims"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
@@ -1716,7 +1716,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "notebookPath": "/Users/${data.databricks_current_user.me.home}/4. Gold/business_logic"
+                    "notebookPath": "${data.databricks_current_user.me.home}/4. Gold/business_logic"
                 },
                 "linkedServiceName": {
                     "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
