@@ -1308,6 +1308,424 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_src_adls_pl" {
 }
 
 
+resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
+  name            = "pl_adb_etl"
+  data_factory_id = azurerm_data_factory.rcm_adf.id
+  activities_json = <<JSON
+[
+
+
+            {
+                "name": "slv_transactions",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Transactions"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_transactions",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_transactions",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/fact_transaction"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_departments",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Departments_F"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_departments",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_departments",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_department"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_patient",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Patient"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_patient",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_patient",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_patient"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_npi",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/NPI"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_npi",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_npi",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_npi"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_icd_code",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/ICD Code"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_icd_code",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_icd_code",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_icd_code"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_provider",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Providers_F"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_provider",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_provider",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_provider"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_cpt_codes",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/CPT codes"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_cpt_codes",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "slv_cpt_codes",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/dim_cpt_code"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_encounters",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Encounters"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "slv_claims",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/3. Silver/Claims"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "gld_output",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "gld_transactions",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "gld_departments",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "gld_provider",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/vijaykrishna.vk94@gmail.com/azure_rcm_project/4. Gold/business_logic"
+                },
+                "linkedServiceName": {
+                    "referenceName": "${var.resource_group_name_prefix}-${var.proj_name_prefix}-${var.env_prefix}-adb-ls",
+                    "type": "LinkedServiceReference"
+                }
+            }
+    ]
+  JSON
+}
 
 # resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
 #   type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
