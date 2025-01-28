@@ -442,11 +442,7 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_src_adls_pl" {
   }
   activities_json = <<JSON
 [
-  {
-    "name": "pl_emr_src_to_adls",
-    "properties": {
-        "activities": [
-            {
+{
                 "name": "Iter_logs",
                 "type": "ForEach",
                 "dependsOn": [
@@ -1307,10 +1303,6 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_src_adls_pl" {
                     "waitOnCompletion": true
                 }
             }
-        ]
-
-
-  }
 ]
   JSON
 }
