@@ -118,10 +118,10 @@ resource "azurerm_key_vault_secret" "rcm_adb_kv" {
 #######################################################################################          Scope Creation             ###########################################################################
 
 #For Adb
-resource "databricks_secret_scope" "kv" {
-  name = "vj-rcm-kv"
-  keyvault_metadata {
-    resource_id = azurerm_key_vault.rcm_kv.id
-    dns_name    = azurerm_key_vault.rcm_kv.vault_uri
-  }
-}
+# resource "databricks_secret_scope" "kv" {
+#   name = "vj-rcm-kv"
+#   keyvault_metadata {
+#     resource_id = azurerm_key_vault.rcm_kv.id
+#     dns_name    = azurerm_key_vault.rcm_kv.vault_uri
+#   }
+# }
