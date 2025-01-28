@@ -303,133 +303,133 @@ resource "azapi_resource" "rcm_dl_ds" {
 #######################################################################################           Pipeline            ###########################################################################
 
 
-resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
-  name            = "pl_active_tables"
-  data_factory_id = azurerm_data_factory.rcm_adf.id
-  variables = {
-    "items" = "items" 
-  }
-  activities_json = <<JSON
-[
-  {
-                "name": "config_emr_lkp",
-                "type": "Lookup",
-                "dependsOn": [],
-                "policy": {
-                    "timeout": "0.12:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "source": {
-                        "type": "DelimitedTextSource",
-                        "storeSettings": {
-                            "type": "AzureBlobFSReadSettings",
-                            "recursive": true,
-                            "enablePartitionDiscovery": false
-                        },
-                        "formatSettings": {
-                            "type": "DelimitedTextReadSettings"
-                        }
-                    },
-                    "dataset": {
-                        "referenceName": "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds",
-                        "type": "DatasetReference",
-                        "parameters": {
-                            "container": "configs",
-                            "folder": "emr",
-                            "file_name": "load_config.csv"
-                        }
-                    },
-                    "firstRowOnly": false
-                }
-            },
-            {
-                "name": "Iter_Tables",
-                "description": "",
-                "type": "ForEach",
-                "dependsOn": [
-                    {
-                        "activity": "config_emr_lkp",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "items": {
-                        "value": "@activity('config_emr_lkp').output.value",
-                        "type": "Expression"
-                    },
-                    "isSequential": true,
-                    "activities": [
-                        {
-                            "name": "IF_Active",
-                            "type": "IfCondition",
-                            "dependsOn": [],
-                            "userProperties": [],
-                            "typeProperties": {
-                                "expression": {
-                                    "value": "@equals(item().is_active,'1')",
-                                    "type": "Expression"
-                                },
-                                "ifTrueActivities": [
-                                    {
-                                        "name": "Append_Tables",
-                                        "type": "AppendVariable",
-                                        "dependsOn": [],
-                                        "userProperties": [],
-                                        "typeProperties": {
-                                            "variableName": "items",
-                                            "value": {
-                                                "value": "@item()",
-                                                "type": "Expression"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "name": "Collect_tables",
-                "type": "SetVariable",
-                "dependsOn": [
-                    {
-                        "activity": "Iter_Tables",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "pipelineReturnValue",
-                    "value": [
-                        {
-                            "key": "item",
-                            "value": {
-                                "type": "Expression",
-                                "content": "@variables('items')"
-                            }
-                        }
-                    ],
-                    "setSystemVariable": true
-                }
-            }
-]
-  JSON
-}
+# resource "azurerm_data_factory_pipeline" "vj_rcm_active_tables_pl" {
+#   name            = "pl_active_tables"
+#   data_factory_id = azurerm_data_factory.rcm_adf.id
+#   variables = {
+#     "items" = "items" 
+#   }
+#   activities_json = <<JSON
+# [
+#   {
+#                 "name": "config_emr_lkp",
+#                 "type": "Lookup",
+#                 "dependsOn": [],
+#                 "policy": {
+#                     "timeout": "0.12:00:00",
+#                     "retry": 0,
+#                     "retryIntervalInSeconds": 30,
+#                     "secureOutput": false,
+#                     "secureInput": false
+#                 },
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "source": {
+#                         "type": "DelimitedTextSource",
+#                         "storeSettings": {
+#                             "type": "AzureBlobFSReadSettings",
+#                             "recursive": true,
+#                             "enablePartitionDiscovery": false
+#                         },
+#                         "formatSettings": {
+#                             "type": "DelimitedTextReadSettings"
+#                         }
+#                     },
+#                     "dataset": {
+#                         "referenceName": "${var.resource_group_name_prefix}_${var.proj_name_prefix}_${var.env_prefix}_generic_flatfile_ds",
+#                         "type": "DatasetReference",
+#                         "parameters": {
+#                             "container": "configs",
+#                             "folder": "emr",
+#                             "file_name": "load_config.csv"
+#                         }
+#                     },
+#                     "firstRowOnly": false
+#                 }
+#             },
+#             {
+#                 "name": "Iter_Tables",
+#                 "description": "",
+#                 "type": "ForEach",
+#                 "dependsOn": [
+#                     {
+#                         "activity": "config_emr_lkp",
+#                         "dependencyConditions": [
+#                             "Succeeded"
+#                         ]
+#                     }
+#                 ],
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "items": {
+#                         "value": "@activity('config_emr_lkp').output.value",
+#                         "type": "Expression"
+#                     },
+#                     "isSequential": true,
+#                     "activities": [
+#                         {
+#                             "name": "IF_Active",
+#                             "type": "IfCondition",
+#                             "dependsOn": [],
+#                             "userProperties": [],
+#                             "typeProperties": {
+#                                 "expression": {
+#                                     "value": "@equals(item().is_active,'1')",
+#                                     "type": "Expression"
+#                                 },
+#                                 "ifTrueActivities": [
+#                                     {
+#                                         "name": "Append_Tables",
+#                                         "type": "AppendVariable",
+#                                         "dependsOn": [],
+#                                         "userProperties": [],
+#                                         "typeProperties": {
+#                                             "variableName": "items",
+#                                             "value": {
+#                                                 "value": "@item()",
+#                                                 "type": "Expression"
+#                                             }
+#                                         }
+#                                     }
+#                                 ]
+#                             }
+#                         }
+#                     ]
+#                 }
+#             },
+#             {
+#                 "name": "Collect_tables",
+#                 "type": "SetVariable",
+#                 "dependsOn": [
+#                     {
+#                         "activity": "Iter_Tables",
+#                         "dependencyConditions": [
+#                             "Succeeded"
+#                         ]
+#                     }
+#                 ],
+#                 "policy": {
+#                     "secureOutput": false,
+#                     "secureInput": false
+#                 },
+#                 "userProperties": [],
+#                 "typeProperties": {
+#                     "variableName": "pipelineReturnValue",
+#                     "value": [
+#                         {
+#                             "key": "item",
+#                             "value": {
+#                                 "type": "Expression",
+#                                 "content": "@variables('items')"
+#                             }
+#                         }
+#                     ],
+#                     "setSystemVariable": true
+#                 }
+#             }
+# ]
+#   JSON
+# }
 
 # resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
 #   type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
