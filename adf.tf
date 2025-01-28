@@ -1727,6 +1727,58 @@ resource "azurerm_data_factory_pipeline" "vj_rcm_adb_etl_pl" {
   JSON
 }
 
+
+
+resource "azurerm_data_factory_pipeline" "vj_rcm_master_pipeline_pl" {
+  name            = "Master_Pipeline"
+  data_factory_id = azurerm_data_factory.rcm_adf.id
+  activities_json = <<JSON
+[
+            {
+                "name": "Execute_pl_etl",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Execute_pl_ingestion",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "pl_adb_etl",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true
+                }
+            },
+            {
+                "name": "Execute_pl_ingestion",
+                "type": "ExecutePipeline",
+                "dependsOn": [],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "pl_emr_src_to_adls",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true
+                }
+            }
+
+
+    ]
+  JSON
+}
+
 # resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
 #   type      = "Microsoft.DataFactory/factories/pipelines@2018-06-01"
 #   name      = azurerm_data_factory_pipeline.vj_rcm_active_tables_pl.name
