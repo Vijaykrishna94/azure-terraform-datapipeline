@@ -436,9 +436,7 @@ resource "azapi_update_resource" "vj_rcm_active_tables_pl_update" {
 
   body = {
         variables = {
-            items = {
-                type = "Array"
-            }
+            items = var.items
         }
   }
 }
