@@ -15,18 +15,19 @@ resource "databricks_notebook" "rcm_adls_mount_notebook" {
 }
 
 ####################################################################################### API Exracts ###############################################################################################
-
-resource "databricks_notebook" "rcm_audit_ddl_notebook" {
-  path     = "${data.databricks_current_user.me.home}/1. Set up/1. audit_ddl.py"
-  language = "PYTHON"
-  source   = "1. Set up/1. audit_ddl.py"
-}
-
 resource "databricks_notebook" "rcm_icd_code_api_extract_notebook" {
   path     = "${data.databricks_current_user.me.home}/2. API extracts/ICD Code API extract.ipynb"
   language = "PYTHON"
   source   = "2. API extracts/ICD Code API extract.ipynb"
 }
+
+resource "databricks_notebook" "rcm_npi_api_notebook" {
+  path     = "${data.databricks_current_user.me.home}/2. API extracts/NPI API extract.ipynb"
+  language = "PYTHON"
+  source   = "2. API extracts/NPI API extract.ipynb"
+}
+
+
 
 ####################################################################################### Silver ###############################################################################################
 
