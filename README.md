@@ -30,18 +30,14 @@
             - An OIDC Authentication Type is setup by creating Federated Credentials 
             * For Pull Request * On Main Branch * On Production Enviroment 
 
+ ![image](https://github.com/user-attachments/assets/34b1140e-8174-4a7f-a37c-320dbf72ba3b)
 
- ![image](https://github.com/user-attachments/assets/23955051-c57f-41e3-9c43-fb0fc90e09be)
-
- ![image](https://github.com/user-attachments/assets/c60e1a33-0f4c-4782-a05e-139b1e8be9b7)
-
-
-      
 
             - Configure the following API permissions -   (Basically read and write  Application and directory permissions)
 
             
-![image](https://github.com/user-attachments/assets/1b60089b-d5e1-4f7e-b216-75021d01bce0)
+ ![image](https://github.com/user-attachments/assets/23955051-c57f-41e3-9c43-fb0fc90e09be)
+ ![image](https://github.com/user-attachments/assets/c60e1a33-0f4c-4782-a05e-139b1e8be9b7)
    
      - Install Terrform CLI on Local and Cloud Shell  
      - Setup Github Actions Workflows  Refer to #tf-plan-apply.yml
