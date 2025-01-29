@@ -31,7 +31,11 @@
             * For Pull Request * On Main Branch * On Production Enviroment 
 
 
-![image](https://github.com/user-attachments/assets/42be9576-0a96-4bed-9b6f-fd5477fa681c)
+ ![image](https://github.com/user-attachments/assets/23955051-c57f-41e3-9c43-fb0fc90e09be)
+
+ ![image](https://github.com/user-attachments/assets/c60e1a33-0f4c-4782-a05e-139b1e8be9b7)
+
+
       
 
             - Configure the following API permissions -   (Basically read and write  Application and directory permissions)
