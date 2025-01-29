@@ -31,12 +31,12 @@
             * For Pull Request * On Main Branch * On Production Enviroment 
 
             
-            ![terraform-project drawio](https://github.com/user-attachments/assets/b89d76ac-43e0-45dd-86ce-3447da5fafd5)
+![terraform-project drawio](https://github.com/user-attachments/assets/b89d76ac-43e0-45dd-86ce-3447da5fafd5)
 
             - Configure the following API permissions and Additional Permissions (BAsically Contirbutor roles to the Resources that are required)
 
             
-            ![image](https://github.com/user-attachments/assets/1b60089b-d5e1-4f7e-b216-75021d01bce0)
+![image](https://github.com/user-attachments/assets/1b60089b-d5e1-4f7e-b216-75021d01bce0)
    
      - Install Terrform CLI on Local and Cloud Shell  
      - Setup Github Actions Workflows  Refer to #tf-plan-apply.yml
@@ -46,13 +46,13 @@
 #### Providers.tf
         
         
-        ![image](https://github.com/user-attachments/assets/5ca72e2e-06c6-42a5-b16d-27ba332517c8)
+![image](https://github.com/user-attachments/assets/5ca72e2e-06c6-42a5-b16d-27ba332517c8)
 
 
     - Blocks -  Azurerm - Azure Reseouce  Manager | databricks - Databricks | azuread - Azure Active Directory | azapi - ARM Template 
 
         
-        ![image](https://github.com/user-attachments/assets/42aba8db-521e-41e0-8874-fe92dc4c9401)
+![image](https://github.com/user-attachments/assets/42aba8db-521e-41e0-8874-fe92dc4c9401)
 
 
     - Backend Block to connect to Storage account where tf state Exists 
@@ -62,7 +62,7 @@
 #### variables.tf
 
         
-        ![image](https://github.com/user-attachments/assets/b8d710cd-3b80-4309-b521-fb6a7b28c138)
+![image](https://github.com/user-attachments/assets/b8d710cd-3b80-4309-b521-fb6a7b28c138)
         
 
     - This Module Consists of variables blocks that are used parametrize resource names/Cluster Configuration and other Params
@@ -70,23 +70,23 @@
 #### main.tf
 
          
-         ![image](https://github.com/user-attachments/assets/e3c8d35a-f6d2-4832-a9f4-52c3f03dbff1)
+![image](https://github.com/user-attachments/assets/e3c8d35a-f6d2-4832-a9f4-52c3f03dbff1)
          
 
     - This module consists of all the resources we want to spin of - Basically a bird eye View of all the resources  - Resource Group | Storage Accounts | Adf Account | DataBricks Workspace
 
-        ![image](https://github.com/user-attachments/assets/fec4be47-884a-4260-b3a0-8a2545f7629c)
+![image](https://github.com/user-attachments/assets/fec4be47-884a-4260-b3a0-8a2545f7629c)
 
 
 ### sp.tf
 
 
-        ![image](https://github.com/user-attachments/assets/1d42c0dc-7383-4e1d-80b6-32ca3eafdeca)
+![image](https://github.com/user-attachments/assets/1d42c0dc-7383-4e1d-80b6-32ca3eafdeca)
 
     - Respective App Registrations and Service Principals are created for the resources that are spinned up  
     - These Sp's are utilized while setting up access policies to the Secrets in Key Vault
 
-        ![image](https://github.com/user-attachments/assets/4d2bc7de-7165-4f17-b4d9-b6b532929d29)
+![image](https://github.com/user-attachments/assets/4d2bc7de-7165-4f17-b4d9-b6b532929d29)
 
 
 
@@ -94,7 +94,7 @@
 #### sqldb.tf
 
 
-        ![image](https://github.com/user-attachments/assets/8b4e520e-fcb7-4fe2-b316-cabe86cf8212)
+![image](https://github.com/user-attachments/assets/8b4e520e-fcb7-4fe2-b316-cabe86cf8212)
 
     - An Sql Server and Sql Db's are setup 
     
@@ -105,7 +105,7 @@
                                                                                                  **Linked Servies**
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        ![image](https://github.com/user-attachments/assets/cd09bdf1-87a3-470e-a939-9f63e0a6ffc6)
+![image](https://github.com/user-attachments/assets/cd09bdf1-87a3-470e-a939-9f63e0a6ffc6)
 
 
     - 5 Linked Services are Created and their respective Secret'names are Provided
@@ -116,7 +116,7 @@
     - Rest Must be self explanaratory 
 
 
-      ![image](https://github.com/user-attachments/assets/d350f0e6-dc52-4fd5-80f9-aa97a32a0346)
+![image](https://github.com/user-attachments/assets/d350f0e6-dc52-4fd5-80f9-aa97a32a0346)
 
     
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -124,13 +124,13 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     
-       ![image](https://github.com/user-attachments/assets/421ca2ed-e1e9-4565-925d-0c59d3f9e0f2)
+![image](https://github.com/user-attachments/assets/421ca2ed-e1e9-4565-925d-0c59d3f9e0f2)
 
     
     - Pipeline Parameters are passed by reading Config File from adls config folder
 
     
-       ![image](https://github.com/user-attachments/assets/041249f3-ba90-4531-aa1d-680654ced66a)
+![image](https://github.com/user-attachments/assets/041249f3-ba90-4531-aa1d-680654ced66a)
     
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -139,42 +139,42 @@
 
     
     
-       ![image](https://github.com/user-attachments/assets/482ffd2d-5b63-4b98-bcf0-5d8fa6bb1074)
+![image](https://github.com/user-attachments/assets/482ffd2d-5b63-4b98-bcf0-5d8fa6bb1074)
 
     - Pipelines are setup using `resource "azurerm_data_factory_pipeline"` and ARM Templates
 
 
-      ![image](https://github.com/user-attachments/assets/3a6400b2-97e1-4ad5-95b7-49cfc86bdc75)
+![image](https://github.com/user-attachments/assets/3a6400b2-97e1-4ad5-95b7-49cfc86bdc75)
 
 
 
 ### adb.tf
 
 
-      ![image](https://github.com/user-attachments/assets/e697e399-d98b-4971-bc3d-905c277f66cd)
+![image](https://github.com/user-attachments/assets/e697e399-d98b-4971-bc3d-905c277f66cd)
 
    
     - Along With Cluster Configuration a PAT is also created which will be used by the ADF to sping up the cluster
 
      
-     ![image](https://github.com/user-attachments/assets/a2a0c84d-9f4d-45d8-810f-b1f0f3afffae)
+![image](https://github.com/user-attachments/assets/a2a0c84d-9f4d-45d8-810f-b1f0f3afffae)
 
 
 #### Notebooks.tf
 
 
-      ![image](https://github.com/user-attachments/assets/9b5f8609-11c8-4eba-a1a9-9b37978dc5d6)
+![image](https://github.com/user-attachments/assets/9b5f8609-11c8-4eba-a1a9-9b37978dc5d6)
 
     
     - Through this module all the ETL Code base including  setup/mounts/silver/gold queries  [.py files - scala/sql/pyspark] are deployed on workspace of adb account
 
     
-     ![image](https://github.com/user-attachments/assets/00f30bda-db53-4e8a-8d7b-0fa844339bb6)
+![image](https://github.com/user-attachments/assets/00f30bda-db53-4e8a-8d7b-0fa844339bb6)
 
 
 ### kv.tf
 
-      ![image](https://github.com/user-attachments/assets/33fc59a0-829a-4eeb-9692-1d01edb66c99)
+![image](https://github.com/user-attachments/assets/33fc59a0-829a-4eeb-9692-1d01edb66c99)
 
     - A standard Key Vault is setup and access policies are defined for the current service principal (vj-terraform-git)
 
