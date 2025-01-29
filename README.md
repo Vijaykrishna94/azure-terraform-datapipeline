@@ -14,7 +14,7 @@
 ### The Arch Diagram :
 
 
-  ![terraform-project drawio](https://github.com/user-attachments/assets/830c07b3-07f5-4b36-9ec4-55ed64e6bb1b)
+ ![terraform-project drawio](https://github.com/user-attachments/assets/b89d76ac-43e0-45dd-86ce-3447da5fafd5)
 
      
 
@@ -30,10 +30,11 @@
             - An OIDC Authentication Type is setup by creating Federated Credentials 
             * For Pull Request * On Main Branch * On Production Enviroment 
 
-            
-![terraform-project drawio](https://github.com/user-attachments/assets/b89d76ac-43e0-45dd-86ce-3447da5fafd5)
 
-            - Configure the following API permissions and Additional Permissions (BAsically Contirbutor roles to the Resources that are required)
+![image](https://github.com/user-attachments/assets/42be9576-0a96-4bed-9b6f-fd5477fa681c)
+      
+
+            - Configure the following API permissions and Additional Permissions (Basically Contirbutor roles to the Resources that are required)
 
             
 ![image](https://github.com/user-attachments/assets/1b60089b-d5e1-4f7e-b216-75021d01bce0)
