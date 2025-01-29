@@ -34,7 +34,7 @@
 ![image](https://github.com/user-attachments/assets/42be9576-0a96-4bed-9b6f-fd5477fa681c)
       
 
-            - Configure the following API permissions and Additional Permissions (Basically Contirbutor roles to the Resources that are required)
+            - Configure the following API permissions -   (Basically read and write  Application and directory permissions)
 
             
 ![image](https://github.com/user-attachments/assets/1b60089b-d5e1-4f7e-b216-75021d01bce0)
