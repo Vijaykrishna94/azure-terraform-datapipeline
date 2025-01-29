@@ -102,47 +102,51 @@
 
 #### adf.tf
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                                                                                 **Linked Servies**
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   **Linked Services**
+   
 
 ![image](https://github.com/user-attachments/assets/cd09bdf1-87a3-470e-a939-9f63e0a6ffc6)
 
 
+
     - 5 Linked Services are Created and their respective Secret'names are Provided
 
-    
     - Delta Table LS to acces Audit table which has information about updated time , type of load etc....
 
     - Rest Must be self explanaratory 
 
 
+
 ![image](https://github.com/user-attachments/assets/d350f0e6-dc52-4fd5-80f9-aa97a32a0346)
 
+
     
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                                                                                    **Datasets**
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   **DataSets**
 
     
 ![image](https://github.com/user-attachments/assets/421ca2ed-e1e9-4565-925d-0c59d3f9e0f2)
 
+
+
     
     - Pipeline Parameters are passed by reading Config File from adls config folder
 
+
+
     
 ![image](https://github.com/user-attachments/assets/041249f3-ba90-4531-aa1d-680654ced66a)
-    
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                                                                                                    **Pipelines**
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     
+
+   **Pipelines** 
+
     
 ![image](https://github.com/user-attachments/assets/482ffd2d-5b63-4b98-bcf0-5d8fa6bb1074)
 
+ 
+    
     - Pipelines are setup using `resource "azurerm_data_factory_pipeline"` and ARM Templates
+
 
 
 ![image](https://github.com/user-attachments/assets/3a6400b2-97e1-4ad5-95b7-49cfc86bdc75)
@@ -152,36 +156,58 @@
 ### adb.tf
 
 
+
 ![image](https://github.com/user-attachments/assets/e697e399-d98b-4971-bc3d-905c277f66cd)
 
    
+      
+
     - Along With Cluster Configuration a PAT is also created which will be used by the ADF to sping up the cluster
 
      
+
+
 ![image](https://github.com/user-attachments/assets/a2a0c84d-9f4d-45d8-810f-b1f0f3afffae)
+
+
 
 
 #### Notebooks.tf
 
 
+
+
 ![image](https://github.com/user-attachments/assets/9b5f8609-11c8-4eba-a1a9-9b37978dc5d6)
+
+    
 
     
     - Through this module all the ETL Code base including  setup/mounts/silver/gold queries  [.py files - scala/sql/pyspark] are deployed on workspace of adb account
 
     
+
+
 ![image](https://github.com/user-attachments/assets/00f30bda-db53-4e8a-8d7b-0fa844339bb6)
+
+
+
 
 
 ### kv.tf
 
+
+
 ![image](https://github.com/user-attachments/assets/33fc59a0-829a-4eeb-9692-1d01edb66c99)
+
+
+
+
 
     - A standard Key Vault is setup and access policies are defined for the current service principal (vj-terraform-git)
 
     - Access Policies are also set for adf,adb,adls Sp's for the level permissions
 
-    - Secrerts are securely created and migrated for accessing adls,adb and sqldb
+    - Secrets are securely created and migrated for accessing adls,adb and sqldb
 
     
 
