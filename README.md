@@ -9,7 +9,8 @@
 
      
 ### Objective :
-    To Automate Resource Creation for End-To-End Pipeline  (My Previous Project https://github.com/Vijaykrishna94/azure_rcm_project)
+    To Automate Resource Creation for End-To-End Pipeline  (My Previous Project - [Azure RCM Project]([url](https://github.com/Vijaykrishna94/azure_rcm_project)))
+    Please Find the detailed Explanation of the Buisness Use case and Setup [Here](https://github.com/Vijaykrishna94/azure_rcm_project)
 
 ### The Arch Diagram :
 
@@ -19,15 +20,15 @@
      
 
 ### Setup
-
-    - Create An Azure Account And a Resource Group For Terraform
+    - Create An Azure Account And a Resource Group For Terraform-Git
     - Download and Install AZ CLI In Local
-    - Create A Github Repo maintain and Deploy the Code
+    - Create A Github Repo to maintain and Deploy the Code
     - In order for the Git to Interact with Azure RM 
-            - A Service Principal Needs to be Created Along with A Storage Account + a Container to Store Tf States.
+            - A Service Principal(sp) Needs to be Created Along with A Storage Account + a Container to Store Tf States.
             - An App needs to be Registered and service principal needs to be configured which acts as an entry point for Github  in this case vj-terraform-git.
             - Save The ClientID, TenantID and subsricption ID (So that we can pass them as ENV Secrets on Git)
-            - An OIDC Authentication Type is setup by creating Federated Credentials 
+            - An OpenIDConnect Authentication Type is setup by creating Federated Credentials 
+            - OIDC authentication works by allowing users to sign in to one application and receive access to another - Basicaly from the SP to other Sp's
             * For Pull Request * On Main Branch * On Production Enviroment 
 
  ![image](https://github.com/user-attachments/assets/34b1140e-8174-4a7f-a37c-320dbf72ba3b)
@@ -206,7 +207,7 @@
 
     - A standard Key Vault is setup and access policies are defined for the current service principal (vj-terraform-git)
 
-    - Access Policies are also set for adf,adb,adls Sp's for the level permissions
+    - Access Policies are also set for adf,adb,adls Sp's to secrets
 
     - Secrets are securely created and migrated for accessing adls,adb and sqldb
 
