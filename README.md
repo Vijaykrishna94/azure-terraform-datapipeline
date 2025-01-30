@@ -9,7 +9,8 @@
 
      
 ### Objective :
-    To Automate Resource Creation for End-To-End Pipeline  (My Previous Project - [Azure RCM Project]([url](https://github.com/Vijaykrishna94/azure_rcm_project)))
+   
+   To Automate Resource Creation for End-To-End Pipeline  (My Previous Project - [Azure RCM Project](https://github.com/Vijaykrishna94/azure_rcm_project)
     Please Find the detailed Explanation of the Buisness Use case and Setup [Here](https://github.com/Vijaykrishna94/azure_rcm_project)
 
 ### The Arch Diagram :
@@ -40,7 +41,7 @@
  ![image](https://github.com/user-attachments/assets/23955051-c57f-41e3-9c43-fb0fc90e09be)
  ![image](https://github.com/user-attachments/assets/c60e1a33-0f4c-4782-a05e-139b1e8be9b7)
    
-     - Install Terrform CLI on Local and Cloud Shell  
+     - Install Terraform CLI on Local and Cloud Shell  
      - Setup Github Actions Workflows  Refer to #tf-plan-apply.yml
      - Now We are good lets look at the Code ....
   
