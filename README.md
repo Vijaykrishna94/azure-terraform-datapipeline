@@ -10,8 +10,7 @@
      
 ### Objective :
    
-   To Automate Resource Creation for End-To-End Pipeline  (My Previous Project - [Azure RCM Project](https://github.com/Vijaykrishna94/azure_rcm_project)
-    Please Find the detailed Explanation of the Buisness Use case and Setup [Here](https://github.com/Vijaykrishna94/azure_rcm_project)
+   To Automate Resource Creation for End-To-End Pipeline My Previous Project - [Azure RCM Project](https://github.com/Vijaykrishna94/azure_rcm_project)
 
 ### The Arch Diagram :
 
