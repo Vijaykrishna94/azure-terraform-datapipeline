@@ -5,7 +5,7 @@
     
 
 ## Tech Stack :
-     Azure SQL DB | ADF | ADLS Gen2 | DataBricks | Delta Lake | Azure Key Vault | Github Actions | Terraform | WIP - Airflow | Helm | Docker | Kubernetes | KubeCtl
+     Azure SQL DB | ADF | ADLS Gen2 | DataBricks | Delta Lake | Azure Key Vault | Github Actions | Terraform | 
 
      
 ### Objective :
@@ -99,6 +99,7 @@
 ![image](https://github.com/user-attachments/assets/8b4e520e-fcb7-4fe2-b316-cabe86cf8212)
 
     - An Sql Server and Sql Db's are setup 
+    - For The purpose of this project the network is exposed to all azure services - This will not be the case in real time. We can whitelist the ip's to access the sql server. 
     
 
 #### adf.tf
@@ -177,8 +178,7 @@
 
 
 
-
- ![image](https://github.com/user-attachments/assets/f34c22bc-49fd-4f2b-929e-9cf11377a6c7)
+![image](https://github.com/user-attachments/assets/8f578b3d-7b2a-4b15-a7a2-a5a1bb179d47)
 
 
     
@@ -189,7 +189,7 @@
     
 
 
-![image](https://github.com/user-attachments/assets/8f578b3d-7b2a-4b15-a7a2-a5a1bb179d47)
+
 
 
 
